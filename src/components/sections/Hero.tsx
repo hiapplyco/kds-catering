@@ -1,25 +1,33 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Background with Fallback Image */}
+      {/* Animated Background Image with Ken Burns Effect */}
       <div className="absolute inset-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/images/food/guacamole-bread-cups-edible-flowers.jpg"
-          className="absolute inset-0 w-full h-full object-cover"
+        <motion.div
+          initial={{ scale: 1 }}
+          animate={{ scale: 1.1 }}
+          transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+          className="absolute inset-0"
         >
-          <source src="/videos/catering-trays.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-brown/90 via-brown/70 to-brown/50" />
+          <Image
+            src="/images/food/buffet-line-rice-beans-empanadas-chicken.jpg"
+            alt="KDS Comfort Food Catering Spread"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        </motion.div>
+        {/* Elegant gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brown/95 via-brown/80 to-brown/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brown/50 via-transparent to-brown/30" />
       </div>
 
       {/* Decorative Elements */}
