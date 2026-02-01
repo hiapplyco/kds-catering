@@ -43,7 +43,7 @@ export const SERVICES = [
     shortDescription: "Make your special day unforgettable with our custom wedding catering.",
     description:
       "From intimate ceremonies to grand celebrations, Chef Yaya brings warmth and flavor to your wedding day. Our experienced team handles everything from menu planning to service, ensuring your guests experience classic comfort with a contemporary touch.",
-    image: "/images/food/fruit-platter-orange-rose-garnish.jpg",
+    image: "/images/food/cookie-brownie-platters-strawberry-roses.jpg",
     features: [
       "Custom menu planning",
       "Professional service staff",
