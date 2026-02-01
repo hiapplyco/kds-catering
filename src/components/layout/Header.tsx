@@ -37,11 +37,11 @@ export default function Header() {
             <Image
               src="/images/logo.png"
               alt="KDS Comfort Food Catering"
-              width={100}
-              height={100}
+              width={140}
+              height={140}
               className={cn(
                 "transition-all duration-300",
-                isScrolled ? "w-14 h-14 md:w-16 md:h-16" : "w-20 h-20 md:w-24 md:h-24"
+                isScrolled ? "w-16 h-16 md:w-20 md:h-20" : "w-24 h-24 md:w-32 md:h-32"
               )}
               priority
             />

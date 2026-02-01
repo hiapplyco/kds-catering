@@ -1,30 +1,80 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
 
+const heroImages = [
+  {
+    src: "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
+    alt: "Full Buffet Spread",
+  },
+  {
+    src: "/images/food/roasted-turkey-cranberries-orange-herbs.jpg",
+    alt: "Roasted Turkey with Herbs",
+  },
+  {
+    src: "/images/food/rainbow-vegetable-crudite-platter-hummus.jpg",
+    alt: "Rainbow Vegetable Platter",
+  },
+  {
+    src: "/images/food/shrimp-guacamole-mango-salsa-cups.jpg",
+    alt: "Shrimp Appetizer Cups",
+  },
+  {
+    src: "/images/food/fried-chicken-rice-buffet-edible-flowers.jpg",
+    alt: "Fried Chicken Buffet",
+  },
+  {
+    src: "/images/food/glazed-salmon-noodles-meal-prep.jpg",
+    alt: "Glazed Salmon",
+  },
+  {
+    src: "/images/food/braised-oxtails.jpg",
+    alt: "Braised Oxtails",
+  },
+];
+
 export default function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+    }, 6000); // Change image every 6 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background Image with Ken Burns Effect */}
+      {/* Rotating Background Images with Ken Burns Effect */}
       <div className="absolute inset-0">
-        <motion.div
-          initial={{ scale: 1 }}
-          animate={{ scale: 1.1 }}
-          transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-          className="absolute inset-0"
-        >
-          <Image
-            src="/images/food/buffet-line-rice-beans-empanadas-chicken.jpg"
-            alt="KDS Comfort Food Catering Spread"
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1.2 }}
+            exit={{ opacity: 0 }}
+            transition={{ 
+              opacity: { duration: 1.5 },
+              scale: { duration: 6, ease: "linear" }
+            }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={heroImages[currentIndex].src}
+              alt={heroImages[currentIndex].alt}
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+            />
+          </motion.div>
+        </AnimatePresence>
+        
         {/* Elegant gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-brown/95 via-brown/80 to-brown/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-brown/50 via-transparent to-brown/30" />
@@ -124,6 +174,22 @@ export default function Hero() {
             </div>
           </motion.div>
         </div>
+      </div>
+
+      {/* Image Indicators */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {heroImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex 
+                ? "bg-orange w-6" 
+                : "bg-white/40 hover:bg-white/60"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
 
       {/* Scroll Indicator */}

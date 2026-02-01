@@ -4,4 +4,5 @@ export { default as ServicesGrid } from "./ServicesGrid";
 export { default as HowItWorks } from "./HowItWorks";
 export { default as TestimonialsCarousel } from "./TestimonialsCarousel";
 export { default as MenuPreview } from "./MenuPreview";
+export { default as VideoShowcase } from "./VideoShowcase";
 export { default as CTASection } from "./CTASection";

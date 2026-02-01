@@ -2,6 +2,7 @@ import {
   Hero,
   ValuePropositions,
   ServicesGrid,
+  VideoShowcase,
   HowItWorks,
   TestimonialsCarousel,
   MenuPreview,
@@ -14,6 +15,7 @@ export default function HomePage() {
       <Hero />
       <ValuePropositions />
       <ServicesGrid />
+      <VideoShowcase />
       <HowItWorks />
       <MenuPreview />
       <TestimonialsCarousel />
