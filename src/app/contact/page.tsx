@@ -262,7 +262,7 @@ export default function ContactPage() {
                     src="/images/chef/chef-yajaira-portrait-black-pink-coat.jpg"
                     alt="Chef Yajaira - Professional Portrait"
                     fill
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
