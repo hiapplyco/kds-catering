@@ -12,13 +12,20 @@ export default function WeddingsPage() {
     <ServicePageTemplate
       title="Wedding Catering"
       description="Make your special day unforgettable with Chef Yaya's wedding catering. Classic comfort with a contemporary touch. From intimate ceremonies to grand celebrations, we bring warmth, flavor, and elegance to your wedding celebration."
-      heroImage="/images/food/charcuterie-fruit-board.jpg"
+      heroImage="/images/food/cookie-brownie-platters-strawberry-roses.jpg"
+      heroVideo="/videos/decorative-salad.mp4"
       galleryImages={[
-        "/images/food/shrimp-cocktail-cups-wooden-board.jpg",
+        "/images/food/fruit-salad-cups.jpg",
         "/images/food/guacamole-bread-cups-edible-flowers.jpg",
         "/images/food/fresh-fruit-platter.jpg",
         "/images/food/cookie-brownie-platters-strawberry-roses.jpg",
       ]}
+      featuredVideo={{
+        src: "/videos/roasted-turkey.mp4",
+        poster: "/images/food/braised-oxtails.jpg",
+        title: "Elegant Presentations",
+        description: "Every wedding deserves show-stopping cuisine. Watch as Chef Yaya crafts beautiful dishes that taste as incredible as they look—from perfectly roasted proteins to artfully arranged platters that become the centerpiece of your celebration.",
+      }}
       features={[
         "Custom menu planning with Chef Yaya consultation",
         "Complimentary tasting for couples",

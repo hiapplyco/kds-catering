@@ -37,11 +37,11 @@ export default function Header() {
             <Image
               src="/images/logo.png"
               alt="KDS Comfort Food Catering"
-              width={60}
-              height={60}
+              width={100}
+              height={100}
               className={cn(
                 "transition-all duration-300",
-                isScrolled ? "w-12 h-12" : "w-14 h-14 md:w-16 md:h-16"
+                isScrolled ? "w-14 h-14 md:w-16 md:h-16" : "w-20 h-20 md:w-24 md:h-24"
               )}
               priority
             />
@@ -61,7 +61,12 @@ export default function Header() {
                 {link.children ? (
                   <>
                     <button
-                      className="flex items-center space-x-1 font-montserrat text-sm font-medium text-brown hover:text-orange transition-colors"
+                      className={cn(
+                        "flex items-center space-x-1 font-montserrat text-sm font-medium transition-colors",
+                        isScrolled
+                          ? "text-brown hover:text-orange"
+                          : "text-white hover:text-orange drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                      )}
                     >
                       <span>{link.label}</span>
                       <ChevronDown className="w-4 h-4" />
@@ -91,7 +96,12 @@ export default function Header() {
                 ) : (
                   <Link
                     href={link.href}
-                    className="font-montserrat text-sm font-medium text-brown hover:text-orange transition-colors"
+                    className={cn(
+                      "font-montserrat text-sm font-medium transition-colors",
+                      isScrolled
+                        ? "text-brown hover:text-orange"
+                        : "text-white hover:text-orange drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                    )}
                   >
                     {link.label}
                   </Link>
@@ -104,7 +114,12 @@ export default function Header() {
           <div className="hidden lg:flex items-center space-x-4">
             <a
               href={`tel:${SITE_CONFIG.phone}`}
-              className="flex items-center space-x-2 text-brown hover:text-orange transition-colors"
+              className={cn(
+                "flex items-center space-x-2 transition-colors",
+                isScrolled
+                  ? "text-brown hover:text-orange"
+                  : "text-white hover:text-orange drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+              )}
             >
               <Phone className="w-4 h-4" />
               <span className="font-montserrat text-sm font-medium">
@@ -119,7 +134,12 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-brown hover:text-orange transition-colors"
+            className={cn(
+              "lg:hidden p-2 transition-colors",
+              isScrolled
+                ? "text-brown hover:text-orange"
+                : "text-white hover:text-orange drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+            )}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (

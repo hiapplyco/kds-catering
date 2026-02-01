@@ -73,7 +73,7 @@ export const SERVICES = [
     shortDescription: "Celebrate life's moments with food that brings people together.",
     description:
       "Birthday parties, anniversaries, family reunions, and more. We help you create memorable gatherings with delicious cuisine that your guests will rave about. Let us handle the cooking while you enjoy the celebration.",
-    image: "/images/food/appetizer-platter-chips-guac-taquitos-skewers.jpg",
+    image: "/images/food/guacamole-bread-cups-edible-flowers.jpg",
     features: [
       "Customizable menus",
       "Full-service or drop-off options",

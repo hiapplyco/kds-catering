@@ -7,13 +7,18 @@ import { ArrowRight, Star } from "lucide-react";
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('/images/food/guacamole-bread-cups-edible-flowers.jpg')`,
-        }}
-      >
+      {/* Video Background with Fallback Image */}
+      <div className="absolute inset-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/images/food/guacamole-bread-cups-edible-flowers.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/catering-trays.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-brown/90 via-brown/70 to-brown/50" />
       </div>
 

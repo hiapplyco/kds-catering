@@ -10,8 +10,15 @@ interface ServicePageTemplateProps {
   title: string;
   description: string;
   heroImage: string;
+  heroVideo?: string;
   features: string[];
   galleryImages?: string[];
+  featuredVideo?: {
+    src: string;
+    poster: string;
+    title: string;
+    description: string;
+  };
   whyChooseUs: {
     title: string;
     description: string;
@@ -24,17 +31,19 @@ interface ServicePageTemplateProps {
 
 const defaultGalleryImages = [
   "/images/food/braised-oxtails.jpg",
-  "/images/food/charcuterie-fruit-board.jpg",
+  "/images/food/cookie-brownie-platters-strawberry-roses.jpg",
   "/images/food/jerk-chicken-rice-peas.jpeg",
-  "/images/food/grilled-salmon-mash-asparagus.jpg",
+  "/images/food/glazed-salmon-noodles-meal-prep.jpg",
 ];
 
 export default function ServicePageTemplate({
   title,
   description,
   heroImage,
+  heroVideo,
   features,
   galleryImages = defaultGalleryImages,
+  featuredVideo,
   whyChooseUs,
   sampleMenu,
 }: ServicePageTemplateProps) {
@@ -42,10 +51,24 @@ export default function ServicePageTemplate({
     <>
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${heroImage}')` }}
-        >
+        <div className="absolute inset-0">
+          {heroVideo ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={heroImage}
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={heroVideo} type="video/mp4" />
+            </video>
+          ) : (
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url('${heroImage}')` }}
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-r from-brown/90 via-brown/70 to-brown/40" />
         </div>
 
@@ -121,6 +144,49 @@ export default function ServicePageTemplate({
           </div>
         </div>
       </section>
+
+      {/* Featured Video */}
+      {featuredVideo && (
+        <section className="py-20 bg-brown">
+          <div className="container-custom">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative rounded-2xl overflow-hidden shadow-2xl"
+              >
+                <video
+                  className="w-full aspect-video object-cover"
+                  poster={featuredVideo.poster}
+                  controls
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src={featuredVideo.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className="text-gold font-montserrat font-semibold uppercase tracking-wider text-sm">
+                  See It In Action
+                </span>
+                <h3 className="text-3xl font-playfair font-bold text-white mt-2 mb-4">
+                  {featuredVideo.title}
+                </h3>
+                <div className="w-16 h-1 bg-gold mb-6" />
+                <p className="text-white/80 leading-relaxed">
+                  {featuredVideo.description}
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Why Choose Us */}
       <section className="py-20 bg-cream">

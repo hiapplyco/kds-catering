@@ -7,9 +7,10 @@ import { ArrowRight } from "lucide-react";
 
 const featuredItems = [
   {
-    name: "Pan-Seared Salmon",
-    description: "Butter garlic glazed salmon with creamy mash and tender asparagus",
-    image: "/images/food/grilled-salmon-mash-asparagus.jpg",
+    name: "Glazed Salmon",
+    description: "Butter garlic glazed salmon with savory noodles, a Chef Yaya signature",
+    image: "/images/food/glazed-salmon-noodles-meal-prep.jpg",
+    video: "/videos/salmon-seafood-dish.mp4",
     category: "Entrées",
   },
   {
@@ -25,10 +26,10 @@ const featuredItems = [
     category: "Appetizers",
   },
   {
-    name: "Charcuterie & Fruit Board",
-    description: "Premium meats, cheeses, fresh berries, and seasonal fruits beautifully arranged",
-    image: "/images/food/charcuterie-fruit-board.jpg",
-    category: "Platters",
+    name: "Dessert Platter",
+    description: "Cookies, brownies, and strawberry roses—beautifully arranged for your celebration",
+    image: "/images/food/cookie-brownie-platters-strawberry-roses.jpg",
+    category: "Desserts",
   },
 ];
 
@@ -84,12 +85,29 @@ export default function MenuPreview() {
               className="group"
             >
               <div className="relative h-64 rounded-xl overflow-hidden mb-4">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+                {item.video ? (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover"
+                    poster={item.image}
+                    muted
+                    loop
+                    playsInline
+                    onMouseEnter={(e) => e.currentTarget.play()}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.pause();
+                      e.currentTarget.currentTime = 0;
+                    }}
+                  >
+                    <source src={item.video} type="video/mp4" />
+                  </video>
+                ) : (
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <span className="absolute top-3 left-3 bg-orange text-white text-xs font-montserrat font-semibold px-3 py-1 rounded-full">
                   {item.category}

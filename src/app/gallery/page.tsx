@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { CTASection } from "@/components/sections";
+import { VideoModal } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
 const galleryCategories = [
@@ -12,6 +13,55 @@ const galleryCategories = [
   { id: "food", name: "Food" },
   { id: "events", name: "Events" },
   { id: "chef", name: "Chef Yaya" },
+];
+
+const galleryVideos = [
+  {
+    id: 1,
+    src: "/videos/roasted-turkey.mp4",
+    poster: "/images/food/braised-oxtails.jpg",
+    title: "Roasted Turkey with Cranberries & Herbs",
+    description: "Holiday perfection",
+  },
+  {
+    id: 2,
+    src: "/videos/decorative-salad.mp4",
+    poster: "/images/food/garden-salad-platter.jpg",
+    title: "Artisan Salad Presentation",
+    description: "Fresh & beautiful",
+  },
+  {
+    id: 3,
+    src: "/videos/garden-salad-platter.mp4",
+    poster: "/images/food/garden-salad-platter.jpg",
+    title: "Garden Fresh Platter",
+    description: "Farm to table",
+  },
+  {
+    id: 4,
+    src: "/videos/catering-trays.mp4",
+    poster: "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
+    title: "Catering Spread",
+    description: "Full service excellence",
+  },
+];
+
+// Vertical videos for social-style showcase
+const verticalVideos = [
+  {
+    id: 1,
+    src: "/videos/mashed-potatoes-mac-cheese-vertical.mp4",
+    poster: "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
+    title: "Comfort Food Catering",
+    description: "Creamy mashed potatoes & mac and cheese",
+  },
+  {
+    id: 2,
+    src: "/videos/catering-flyers-promo-vertical.mp4",
+    poster: "/images/food/catering-spread-caesar-salads.jpeg",
+    title: "About KDS Catering",
+    description: "Our services & offerings",
+  },
 ];
 
 const galleryImages = [
@@ -22,10 +72,38 @@ const galleryImages = [
     alt: "Guacamole Bread Cups with Edible Flowers",
     category: "food",
   },
+  // NEW: Rainbow Vegetable Crudité
+  {
+    id: 24,
+    src: "/images/food/rainbow-vegetable-crudite-platter-hummus.jpg",
+    alt: "Rainbow Vegetable Crudité Platter with Hummus",
+    category: "food",
+  },
+  // NEW: Roasted Turkey
+  {
+    id: 25,
+    src: "/images/food/roasted-turkey-cranberries-orange-herbs.jpg",
+    alt: "Roasted Turkey with Cranberries, Orange & Fresh Herbs",
+    category: "food",
+  },
+  // NEW: Fried Chicken Buffet
+  {
+    id: 26,
+    src: "/images/food/fried-chicken-rice-buffet-edible-flowers.jpg",
+    alt: "Fried Chicken & Yellow Rice Buffet with Edible Flowers",
+    category: "events",
+  },
+  // NEW: Shrimp Appetizers
+  {
+    id: 27,
+    src: "/images/food/shrimp-guacamole-mango-salsa-cups.jpg",
+    alt: "Shrimp Guacamole & Mango Salsa Appetizer Cups",
+    category: "food",
+  },
   {
     id: 2,
-    src: "/images/food/grilled-salmon-mash-asparagus.jpg",
-    alt: "Grilled Salmon with Garlic Mash and Asparagus",
+    src: "/images/food/glazed-salmon-noodles-meal-prep.jpg",
+    alt: "Glazed Salmon with Noodles - Chef Yaya Signature",
     category: "food",
   },
   {
@@ -48,14 +126,14 @@ const galleryImages = [
   },
   {
     id: 6,
-    src: "/images/food/charcuterie-fruit-board.jpg",
-    alt: "Premium Charcuterie & Fruit Board",
+    src: "/images/food/cookie-brownie-platters-strawberry-roses.jpg",
+    alt: "Dessert Platter with Cookies, Brownies & Strawberry Roses",
     category: "food",
   },
   {
     id: 7,
-    src: "/images/food/shrimp-cocktail-cups-wooden-board.jpg",
-    alt: "Shrimp Cocktail Cups - Elegant Presentation",
+    src: "/images/food/fruit-salad-cups.jpg",
+    alt: "Fresh Fruit Salad Cups - Elegant Presentation",
     category: "food",
   },
   {
@@ -66,127 +144,91 @@ const galleryImages = [
   },
   {
     id: 9,
-    src: "/images/food/cookie-brownie-platters-strawberry-roses.jpg",
-    alt: "Dessert Platter with Strawberry Roses",
-    category: "food",
+    src: "/images/food/catering-spread-caesar-salads.jpeg",
+    alt: "Catering Spread with Caesar Salads",
+    category: "events",
   },
   {
     id: 10,
-    src: "/images/food/appetizer-spread-wings-shrimp.jpg",
-    alt: "Appetizer Spread with Wings and Shrimp",
-    category: "food",
+    src: "/images/food/boxed-lunches-sandwich-pasta-cookies.jpg",
+    alt: "Boxed Lunches with Sandwiches, Pasta & Cookies",
+    category: "events",
   },
   {
     id: 11,
-    src: "/images/food/glazed-salmon-noodles-meal-prep.jpg",
-    alt: "Glazed Salmon with Noodles",
-    category: "food",
-  },
-  {
-    id: 12,
-    src: "/images/food/appetizer-platter-chips-guac-taquitos-skewers.jpg",
-    alt: "Appetizer Platter with Guacamole and Skewers",
-    category: "food",
-  },
-  {
-    id: 13,
-    src: "/images/food/catering-spread-caesar-salads.jpeg",
-    alt: "Catering Spread with Caesar Salads",
-    category: "food",
-  },
-  {
-    id: 14,
     src: "/images/food/arroz-con-pollo.jpg",
     alt: "Arroz con Pollo - Chicken and Rice",
     category: "food",
   },
   {
-    id: 15,
+    id: 12,
     src: "/images/food/fresh-fruit-platter.jpg",
     alt: "Fresh Fruit Platter",
     category: "food",
   },
   {
-    id: 16,
-    src: "/images/food/lemon-herb-grilled-chicken.jpg",
-    alt: "Lemon Herb Grilled Chicken",
+    id: 13,
+    src: "/images/food/garden-salad-platter.jpg",
+    alt: "Fresh Garden Salad Platter",
     category: "food",
   },
   {
-    id: 17,
-    src: "/images/food/grilled-vegetable-medley.jpg",
-    alt: "Grilled Vegetable Medley",
-    category: "food",
-  },
-  {
-    id: 18,
-    src: "/images/food/fruit-salad-cups.jpg",
-    alt: "Fresh Fruit Salad Cups",
-    category: "food",
-  },
-  {
-    id: 19,
+    id: 14,
     src: "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
     alt: "Full Buffet Spread - Rice, Beans, Empanadas, Chicken",
     category: "events",
   },
-  {
-    id: 20,
-    src: "/images/food/boxed-lunches-sandwich-pasta-cookies.jpg",
-    alt: "Boxed Lunches with Sandwiches and Pasta",
-    category: "events",
-  },
   // Chef Yaya Images
   {
-    id: 21,
+    id: 15,
     src: "/images/chef/chef-yaya-outdoor-portrait.jpg",
     alt: "Chef Yaya - Outdoor Portrait",
     category: "chef",
   },
   {
-    id: 22,
+    id: 16,
     src: "/images/chef/chef-yajaira-portrait-black-pink-coat.jpg",
     alt: "Chef Yajaira - Professional Portrait",
     category: "chef",
   },
   {
-    id: 23,
+    id: 17,
     src: "/images/chef/chef-yaya-hall-of-fame-award.jpg",
     alt: "Chef Yaya - Hall of Fame Award Ceremony",
     category: "chef",
   },
   {
-    id: 24,
+    id: 18,
     src: "/images/chef/nbca-awards-2025-promo-chef-yajaira.jpg",
     alt: "NBCA Awards - Chef Yajaira Feature",
     category: "chef",
   },
   {
-    id: 25,
+    id: 19,
     src: "/images/chef/chef-yaya-senator-schumer.jpg",
     alt: "Chef Yaya with Senator Chuck Schumer",
     category: "chef",
   },
   {
-    id: 26,
+    id: 20,
     src: "/images/chef/chef-yaya-mayor-dinkins.jpg",
     alt: "Chef Yaya with Mayor David Dinkins",
     category: "chef",
   },
   {
-    id: 27,
+    id: 21,
     src: "/images/chef/chef-yajaira-avenues-for-justice-feature.jpg",
     alt: "Chef Yajaira - Avenues for Justice Feature",
     category: "events",
   },
   {
-    id: 28,
+    id: 22,
     src: "/images/chef/chef-yaya-nyc-school-event.jpg",
     alt: "Chef Yaya at NYC School Event",
     category: "events",
   },
   {
-    id: 29,
+    id: 23,
     src: "/images/chef/chef-yaya-manhattan-6th-ave.jpg",
     alt: "Chef Yaya in Manhattan",
     category: "chef",
@@ -339,6 +381,63 @@ export default function GalleryPage() {
         </div>
       </section>
 
+      {/* Video Showcase */}
+      <section className="py-20 bg-cream">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+            >
+              In Motion
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-4xl font-playfair font-bold text-brown mt-2 mb-4"
+            >
+              Video <span className="text-orange">Showcase</span>
+            </motion.h2>
+            <div className="w-16 h-1 bg-gold mx-auto" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {galleryVideos.map((video, index) => (
+              <motion.div
+                key={video.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="relative rounded-2xl overflow-hidden shadow-lg group"
+              >
+                <video
+                  className="w-full aspect-video object-cover"
+                  poster={video.poster}
+                  controls
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src={video.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-brown/90 to-transparent p-6 pointer-events-none">
+                  <h3 className="text-white font-playfair font-semibold text-lg">
+                    {video.title}
+                  </h3>
+                  <p className="text-white/70 text-sm font-montserrat">
+                    {video.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Lightbox */}
       <AnimatePresence>
         {lightboxIndex !== null && (
@@ -409,6 +508,61 @@ export default function GalleryPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Vertical Video Showcase - Social Style */}
+      <section className="py-20 bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+            >
+              Behind the Scenes
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-4xl font-playfair font-bold text-brown mt-2 mb-4"
+            >
+              Stories & <span className="text-orange">Reels</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-brown/70 max-w-xl mx-auto"
+            >
+              Click to expand and watch with sound
+            </motion.p>
+            <div className="w-16 h-1 bg-gold mx-auto mt-4" />
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-6">
+            {verticalVideos.map((video, index) => (
+              <motion.div
+                key={video.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="w-full max-w-[280px]"
+              >
+                <VideoModal
+                  src={video.src}
+                  poster={video.poster}
+                  title={video.title}
+                  description={video.description}
+                  aspectRatio="vertical"
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <CTASection />

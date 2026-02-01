@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Phone,
@@ -254,13 +255,34 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Chef Image */}
-              <div className="relative rounded-xl overflow-hidden h-48">
-                <img
-                  src="/images/chef/chef-yaya-outdoor-portrait.jpg"
-                  alt="Chef Yaya"
-                  className="w-full h-full object-cover"
-                />
+              {/* Chef Images */}
+              <div className="space-y-4">
+                <div className="relative rounded-xl overflow-hidden h-48">
+                  <Image
+                    src="/images/chef/chef-yajaira-portrait-black-pink-coat.jpg"
+                    alt="Chef Yajaira - Professional Portrait"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="relative rounded-xl overflow-hidden h-32">
+                    <Image
+                      src="/images/food/guacamole-bread-cups-edible-flowers.jpg"
+                      alt="Elegant appetizer presentation"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative rounded-xl overflow-hidden h-32">
+                    <Image
+                      src="/images/food/cookie-brownie-platters-strawberry-roses.jpg"
+                      alt="Beautiful dessert platter"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
               </div>
             </motion.div>
 

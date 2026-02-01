@@ -74,8 +74,55 @@ export default function MenuPage() {
         </div>
       </section>
 
-      {/* Package Tiers */}
+      {/* Video Showcase */}
       <section className="py-16 bg-brown">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <span className="text-gold font-montserrat font-semibold uppercase tracking-wider text-sm">
+                Crafted With Care
+              </span>
+              <h2 className="text-3xl md:text-4xl font-playfair font-bold text-white mt-2 mb-4">
+                See Our Dishes Come to Life
+              </h2>
+              <div className="w-16 h-1 bg-gold mb-6" />
+              <p className="text-white/80 leading-relaxed mb-6">
+                Every dish from KDS Comfort Food is prepared with love and attention
+                to detail. From perfectly roasted meats to beautifully arranged
+                platters, Chef Yaya brings artistry to every meal.
+              </p>
+              <p className="text-white/60 text-sm">
+                Watch our culinary team in action and see why our clients call our
+                presentations &ldquo;consistently clean, polished, and visually appealing.&rdquo;
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-2xl overflow-hidden shadow-2xl"
+            >
+              <video
+                className="w-full aspect-video object-cover"
+                poster="/images/food/braised-oxtails.jpg"
+                controls
+                playsInline
+                preload="metadata"
+              >
+                <source src="/videos/roasted-turkey.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Package Tiers */}
+      <section className="py-16 bg-cream">
         <div className="container-custom">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-playfair font-bold text-white mb-2">

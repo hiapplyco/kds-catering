@@ -133,3 +133,23 @@
 ::selection {
   @apply bg-orange/20 text-brown;
 }
+
+/* Infinite scroll animation for image galleries */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}

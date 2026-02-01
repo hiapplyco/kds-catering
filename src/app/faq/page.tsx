@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, HelpCircle } from "lucide-react";
@@ -53,7 +54,42 @@ export default function FAQPage() {
       {/* FAQ Accordion */}
       <section className="py-20 bg-white">
         <div className="container-custom">
-          <div className="max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            {/* Side Images - Desktop Only */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="hidden lg:block space-y-4"
+            >
+              <div className="relative h-48 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/food/glazed-salmon-noodles-meal-prep.jpg"
+                  alt="Glazed salmon"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative h-32 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/chef/chef-yaya-outdoor-portrait.jpg"
+                  alt="Chef Yaya"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative h-48 rounded-xl overflow-hidden">
+                <Image
+                  src="/images/food/buffet-line-rice-beans-empanadas-chicken.jpg"
+                  alt="Buffet spread"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </motion.div>
+
+            {/* FAQ Content */}
+            <div className="lg:col-span-3">
             <div className="space-y-4">
               {FAQ_ITEMS.map((item, index) => (
                 <motion.div
@@ -101,6 +137,7 @@ export default function FAQPage() {
                   </AnimatePresence>
                 </motion.div>
               ))}
+            </div>
             </div>
           </div>
         </div>

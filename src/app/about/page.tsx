@@ -157,8 +157,83 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Chef Yaya Feature Section */}
+      {/* Video Showcase */}
       <section className="py-20 bg-cream">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+            >
+              See Our Craft
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="section-heading mt-2"
+            >
+              Culinary Excellence
+            </motion.h2>
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              className="gold-divider"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {[
+              {
+                src: "/videos/roasted-turkey.mp4",
+                poster: "/images/food/braised-oxtails.jpg",
+                title: "Holiday Perfection",
+                description: "Beautifully roasted turkey with cranberries and herbs",
+              },
+              {
+                src: "/videos/salmon-seafood-dish.mp4",
+                poster: "/images/food/glazed-salmon-noodles-meal-prep.jpg",
+                title: "Signature Seafood",
+                description: "Fresh salmon with Chef Yaya's signature glaze",
+              },
+            ].map((video, index) => (
+              <motion.div
+                key={video.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="relative rounded-2xl overflow-hidden shadow-lg group"
+              >
+                <video
+                  className="w-full aspect-video object-cover"
+                  poster={video.poster}
+                  controls
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src={video.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-brown/90 to-transparent p-6 pointer-events-none">
+                  <h3 className="text-white font-playfair font-semibold text-lg">
+                    {video.title}
+                  </h3>
+                  <p className="text-white/70 text-sm font-montserrat">
+                    {video.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Chef Yaya Feature Section */}
+      <section className="py-20 bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
             <motion.h2
@@ -184,13 +259,31 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="relative h-[400px] rounded-2xl overflow-hidden">
-                <Image
-                  src="/images/chef/chef-yaya-hall-of-fame-award.jpg"
-                  alt="Chef Yaya receiving Hall of Fame Award"
-                  fill
-                  className="object-cover"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="relative h-[250px] rounded-2xl overflow-hidden">
+                  <Image
+                    src="/images/chef/chef-yaya-hall-of-fame-award.jpg"
+                    alt="Chef Yaya receiving Hall of Fame Award"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative h-[250px] rounded-2xl overflow-hidden">
+                  <Image
+                    src="/images/chef/nbca-awards-2025-promo-chef-yajaira.jpg"
+                    alt="NBCA Awards - Chef Yajaira Feature"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative h-[200px] rounded-2xl overflow-hidden col-span-2">
+                  <Image
+                    src="/images/chef/chef-yajaira-portrait-black-pink-coat.jpg"
+                    alt="Chef Yajaira - Professional Portrait"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </motion.div>
 
@@ -234,49 +327,90 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-cream">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <motion.span
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
-            >
-              What We Believe
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="section-heading mt-2"
-            >
-              Our Values
-            </motion.h2>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              className="gold-divider"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 30 }}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <motion.span
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+              >
+                What We Believe
+              </motion.span>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-cream rounded-xl p-6"
+                className="section-heading mt-2 text-left"
               >
-                <h3 className="font-playfair font-semibold text-xl text-orange mb-2">
-                  {value.title}
-                </h3>
-                <p className="text-brown/70">{value.description}</p>
-              </motion.div>
-            ))}
+                Our Values
+              </motion.h2>
+              <div className="w-16 h-1 bg-gold mb-8" />
+
+              <div className="space-y-6">
+                {values.map((value, index) => (
+                  <motion.div
+                    key={value.title}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white rounded-xl p-6 shadow-sm"
+                  >
+                    <h3 className="font-playfair font-semibold text-xl text-orange mb-2">
+                      {value.title}
+                    </h3>
+                    <p className="text-brown/70">{value.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 gap-4"
+            >
+              <div className="space-y-4">
+                <div className="relative h-48 rounded-xl overflow-hidden">
+                  <Image
+                    src="/images/food/braised-oxtails.jpg"
+                    alt="Braised Oxtails"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative h-64 rounded-xl overflow-hidden">
+                  <Image
+                    src="/images/food/guacamole-bread-cups-edible-flowers.jpg"
+                    alt="Guacamole Bread Cups"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+              <div className="space-y-4 pt-8">
+                <div className="relative h-64 rounded-xl overflow-hidden">
+                  <Image
+                    src="/images/food/jerk-chicken-rice-peas.jpeg"
+                    alt="Jerk Chicken with Rice and Peas"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative h-48 rounded-xl overflow-hidden">
+                  <Image
+                    src="/images/food/cookie-brownie-platters-strawberry-roses.jpg"
+                    alt="Dessert Platter"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
