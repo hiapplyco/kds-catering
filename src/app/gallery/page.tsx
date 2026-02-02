@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -32,7 +32,7 @@ const galleryVideos = [
   },
   {
     id: 3,
-    src: "/videos/garden-salad-platter.mp4",
+    src: "/videos/street-tacos-platter.mp4",
     poster: "/images/food/garden-salad-platter.jpg",
     title: "Garden Fresh Platter",
     description: "Farm to table",
@@ -96,7 +96,7 @@ const galleryImages = [
   // NEW: Shrimp Appetizers
   {
     id: 27,
-    src: "/images/food/shrimp-guacamole-mango-salsa-cups.jpg",
+    src: "/images/food/guacamole-bread-cups-edible-flowers.jpg",
     alt: "Shrimp Guacamole & Mango Salsa Appetizer Cups",
     category: "food",
   },
@@ -248,31 +248,27 @@ export default function GalleryPage() {
     document.body.style.overflow = "hidden";
   };
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setLightboxIndex(null);
     document.body.style.overflow = "auto";
-  };
+  }, []);
 
-  const nextImage = () => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex((prev) =>
-        prev !== null ? (prev + 1) % filteredImages.length : 0
-      );
-    }
-  };
+  const nextImage = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev !== null ? (prev + 1) % filteredImages.length : 0
+    );
+  }, [filteredImages.length]);
 
-  const prevImage = () => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex((prev) =>
-        prev !== null
-          ? (prev - 1 + filteredImages.length) % filteredImages.length
-          : 0
-      );
-    }
-  };
+  const prevImage = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev !== null
+        ? (prev - 1 + filteredImages.length) % filteredImages.length
+        : 0
+    );
+  }, [filteredImages.length]);
 
-  // Handle keyboard navigation
-  if (typeof window !== "undefined") {
+  // Properly handle keyboard navigation in useEffect with cleanup
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (lightboxIndex === null) return;
       if (e.key === "Escape") closeLightbox();
@@ -283,18 +279,23 @@ export default function GalleryPage() {
     if (lightboxIndex !== null) {
       window.addEventListener("keydown", handleKeyDown);
     }
-  }
+
+    // Cleanup function removes listener when lightbox closes or component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxIndex, closeLightbox, nextImage, prevImage]);
 
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-cream">
+      <section className="relative pt-32 pb-20 bg-chamomile">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+              className="text-sage font-montserrat font-semibold uppercase tracking-wider text-sm"
             >
               See Our Work
             </motion.span>
@@ -322,17 +323,22 @@ export default function GalleryPage() {
       {/* Gallery */}
       <section className="py-20 bg-white">
         <div className="container-custom">
-          {/* Category Filters */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {/* Category Filters with aria-pressed */}
+          <div 
+            className="flex flex-wrap justify-center gap-2 mb-12"
+            role="group"
+            aria-label="Filter gallery by category"
+          >
             {galleryCategories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
+                aria-pressed={activeCategory === cat.id}
                 className={cn(
                   "px-6 py-2 rounded-full font-montserrat text-sm font-medium transition-colors",
                   activeCategory === cat.id
-                    ? "bg-orange text-white"
-                    : "bg-cream text-brown hover:bg-orange/10"
+                    ? "bg-sage text-white"
+                    : "bg-oat text-brown hover:bg-sage/10"
                 )}
               >
                 {cat.name}
@@ -360,6 +366,7 @@ export default function GalleryPage() {
                   <button
                     onClick={() => openLightbox(index)}
                     className="relative w-full overflow-hidden rounded-xl group cursor-pointer"
+                    aria-label={`View ${image.alt}`}
                   >
                     <Image
                       src={image.src}
@@ -382,14 +389,14 @@ export default function GalleryPage() {
       </section>
 
       {/* Video Showcase */}
-      <section className="py-20 bg-cream">
+      <section className="py-20 bg-oat">
         <div className="container-custom">
           <div className="text-center mb-12">
             <motion.span
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+              className="text-sage font-montserrat font-semibold uppercase tracking-wider text-sm"
             >
               In Motion
             </motion.span>
@@ -447,6 +454,9 @@ export default function GalleryPage() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
             onClick={closeLightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image lightbox"
           >
             {/* Close Button */}
             <button
@@ -517,7 +527,7 @@ export default function GalleryPage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+              className="text-sage font-montserrat font-semibold uppercase tracking-wider text-sm"
             >
               Behind the Scenes
             </motion.span>

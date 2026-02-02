@@ -4,8 +4,9 @@ import {
   ServicesGrid,
   VideoShowcase,
   HowItWorks,
-  TestimonialsCarousel,
+  InlineTestimonial,
   MenuPreview,
+  TestimonialsCarousel,
   CTASection,
 } from "@/components/sections";
 
@@ -17,6 +18,8 @@ export default function HomePage() {
       <ServicesGrid />
       <VideoShowcase />
       <HowItWorks />
+      {/* Inline testimonial snippet between sections */}
+      <InlineTestimonial testimonialIndex={3} variant="light" />
       <MenuPreview />
       <TestimonialsCarousel />
       <CTASection />

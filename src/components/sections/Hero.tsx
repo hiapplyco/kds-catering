@@ -20,7 +20,7 @@ const heroImages = [
     alt: "Rainbow Vegetable Platter",
   },
   {
-    src: "/images/food/shrimp-guacamole-mango-salsa-cups.jpg",
+    src: "/images/food/guacamole-bread-cups-edible-flowers.jpg",
     alt: "Shrimp Appetizer Cups",
   },
   {
@@ -55,14 +55,14 @@ export default function Hero() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1.2 }}
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1.05 }}
             exit={{ opacity: 0 }}
             transition={{ 
-              opacity: { duration: 1.5 },
+              opacity: { duration: 1.2 },
               scale: { duration: 6, ease: "linear" }
             }}
-            className="absolute inset-0"
+            className="absolute inset-0 motion-reduce:scale-100 motion-reduce:transition-none"
           >
             <Image
               src={heroImages[currentIndex].src}
@@ -75,9 +75,9 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
         
-        {/* Elegant gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brown/95 via-brown/80 to-brown/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brown/50 via-transparent to-brown/30" />
+        {/* Lightened gradient overlay — Brooklyn comfort aesthetic */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brown/80 via-brown/60 to-brown/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brown/40 via-transparent to-brown/20" />
       </div>
 
       {/* Decorative Elements */}
@@ -139,7 +139,7 @@ export default function Hero() {
             </Link>
             <Link
               href="/menu"
-              className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white font-montserrat font-semibold rounded-lg transition-all duration-300 hover:bg-white/20"
+              className="btn-ghost-light"
             >
               Explore Our Menu
             </Link>
@@ -177,17 +177,19 @@ export default function Hero() {
       </div>
 
       {/* Image Indicators */}
-      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-10" role="tablist" aria-label="Hero image slides">
         {heroImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 rounded-full transition-all duration-300 motion-reduce:transition-none ${
               index === currentIndex 
                 ? "bg-orange w-6" 
                 : "bg-white/40 hover:bg-white/60"
             }`}
-            aria-label={`Go to slide ${index + 1}`}
+            role="tab"
+            aria-selected={index === currentIndex}
+            aria-label={`View slide ${index + 1}: ${heroImages[index].alt}`}
           />
         ))}
       </div>

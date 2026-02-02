@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Quote, Star } from "lucide-react";
 import { CTASection } from "@/components/sections";
+import { TESTIMONIALS } from "@/lib/constants";
 
 interface ServicePageTemplateProps {
   title: string;
@@ -27,6 +28,10 @@ interface ServicePageTemplateProps {
     category: string;
     items: string[];
   }[];
+  // New dynamic content props
+  testimonialIndex?: number;
+  clientLogos?: string[];
+  heroOverlayColor?: "brown" | "sage" | "persimmon";
 }
 
 const defaultGalleryImages = [
@@ -35,6 +40,13 @@ const defaultGalleryImages = [
   "/images/food/jerk-chicken-rice-peas.jpeg",
   "/images/food/glazed-salmon-noodles-meal-prep.jpg",
 ];
+
+// Overlay color mapping for event types
+const overlayColors = {
+  brown: "from-brown/80 via-brown/60 to-brown/40",
+  sage: "from-sage/70 via-sage/50 to-sage/30",
+  persimmon: "from-persimmon/70 via-persimmon/50 to-persimmon/30",
+};
 
 export default function ServicePageTemplate({
   title,
@@ -46,10 +58,16 @@ export default function ServicePageTemplate({
   featuredVideo,
   whyChooseUs,
   sampleMenu,
+  testimonialIndex = 0,
+  clientLogos = [],
+  heroOverlayColor = "brown",
 }: ServicePageTemplateProps) {
+  // Get a relevant testimonial
+  const testimonial = TESTIMONIALS[testimonialIndex % TESTIMONIALS.length];
+
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section - Lightened with pastel overlays */}
       <section className="relative min-h-[60vh] flex items-center">
         <div className="absolute inset-0">
           {heroVideo ? (
@@ -69,7 +87,8 @@ export default function ServicePageTemplate({
               style={{ backgroundImage: `url('${heroImage}')` }}
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-r from-brown/90 via-brown/70 to-brown/40" />
+          {/* Lighter gradient overlay */}
+          <div className={`absolute inset-0 bg-gradient-to-r ${overlayColors[heroOverlayColor]}`} />
         </div>
 
         <div className="container-custom relative z-10 pt-24 pb-16">
@@ -85,10 +104,10 @@ export default function ServicePageTemplate({
               <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
               All Services
             </Link>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-white mb-6 drop-shadow-lg">
               {title}
             </h1>
-            <p className="text-lg text-white/80 leading-relaxed">
+            <p className="text-lg text-white/90 leading-relaxed drop-shadow-md">
               {description}
             </p>
           </motion.div>
@@ -111,8 +130,8 @@ export default function ServicePageTemplate({
               <ul className="space-y-4">
                 {features.map((feature) => (
                   <li key={feature} className="flex items-start">
-                    <span className="w-6 h-6 rounded-full bg-orange/10 flex items-center justify-center mr-3 mt-0.5">
-                      <Check className="w-4 h-4 text-orange" />
+                    <span className="w-6 h-6 rounded-full bg-sage/20 flex items-center justify-center mr-3 mt-0.5">
+                      <Check className="w-4 h-4 text-sage" />
                     </span>
                     <span className="text-brown/80">{feature}</span>
                   </li>
@@ -144,6 +163,63 @@ export default function ServicePageTemplate({
           </div>
         </div>
       </section>
+
+      {/* Inline Testimonial Block - Dynamic */}
+      <section className="py-16 bg-chamomile">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <Quote className="w-12 h-12 text-orange/20 mx-auto mb-4" />
+            <blockquote className="text-xl md:text-2xl font-cormorant italic text-brown/80 leading-relaxed mb-6">
+              &ldquo;{testimonial.quote.slice(0, 200)}...&rdquo;
+            </blockquote>
+            <div className="flex items-center justify-center space-x-1 mb-3">
+              {[...Array(testimonial.rating)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 text-gold fill-gold" />
+              ))}
+            </div>
+            <p className="font-playfair font-semibold text-brown">
+              {testimonial.name}
+            </p>
+            <p className="text-sm text-orange">{testimonial.event}</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Client Logos - If provided */}
+      {clientLogos.length > 0 && (
+        <section className="py-12 bg-oat">
+          <div className="container-custom">
+            <p className="text-center text-sm font-montserrat text-brown/50 uppercase tracking-wider mb-8">
+              Trusted By
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+              {clientLogos.map((logo, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="grayscale hover:grayscale-0 transition-all duration-300"
+                >
+                  <Image
+                    src={logo}
+                    alt="Client logo"
+                    width={120}
+                    height={60}
+                    className="h-12 w-auto object-contain"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Featured Video */}
       {featuredVideo && (
@@ -188,11 +264,11 @@ export default function ServicePageTemplate({
         </section>
       )}
 
-      {/* Why Choose Us */}
+      {/* Why Choose Us - Using alternating background */}
       <section className="py-20 bg-cream">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="section-heading">
+            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-brown mb-4">
               Why Choose Us for Your {title}
             </h2>
             <div className="gold-divider" />
@@ -206,9 +282,9 @@ export default function ServicePageTemplate({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-xl p-6 shadow-sm"
+                className="bg-white rounded-xl p-6 shadow-sm border border-cream-200 hover:shadow-md transition-shadow"
               >
-                <h3 className="font-playfair font-semibold text-xl text-orange mb-2">
+                <h3 className="font-playfair font-semibold text-xl text-sage mb-2">
                   {item.title}
                 </h3>
                 <p className="text-brown/70 text-sm">{item.description}</p>
@@ -220,20 +296,22 @@ export default function ServicePageTemplate({
 
       {/* Sample Menu */}
       {sampleMenu && (
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-oat">
           <div className="container-custom">
             <div className="text-center mb-12">
-              <span className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm">
+              <span className="text-sage font-montserrat font-semibold uppercase tracking-wider text-sm">
                 Preview
               </span>
-              <h2 className="section-heading mt-2">Sample Menu</h2>
+              <h2 className="text-3xl md:text-4xl font-playfair font-bold text-brown mt-2 mb-4">
+                Sample Menu
+              </h2>
               <div className="gold-divider" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {sampleMenu.map((category) => (
-                <div key={category.category}>
-                  <h3 className="font-playfair font-semibold text-xl text-brown mb-4 pb-2 border-b border-gold">
+                <div key={category.category} className="bg-white rounded-xl p-6 shadow-sm">
+                  <h3 className="font-cormorant font-semibold text-xl text-brown mb-4 pb-2 border-b border-gold">
                     {category.category}
                   </h3>
                   <ul className="space-y-2">

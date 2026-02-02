@@ -8,9 +8,9 @@ const stepIcons = [MessageCircle, ClipboardList, PartyPopper];
 
 export default function HowItWorks() {
   return (
-    <section className="py-20 bg-brown text-white relative overflow-hidden">
+    <section className="py-24 bg-brown text-white relative overflow-hidden">
       {/* Decorative Background */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-orange/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute top-0 left-0 w-64 h-64 bg-sage/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
 
       <div className="container-custom relative z-10">
@@ -19,7 +19,7 @@ export default function HowItWorks() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-gold font-montserrat font-semibold uppercase tracking-wider text-sm"
+            className="text-persimmon font-montserrat font-semibold uppercase tracking-wider text-sm"
           >
             Simple Process
           </motion.span>
@@ -28,7 +28,7 @@ export default function HowItWorks() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-4xl md:text-5xl font-playfair font-bold mt-2 mb-4"
+            className="text-3xl md:text-4xl font-playfair font-bold mt-2 mb-4"
           >
             How It Works
           </motion.h2>
@@ -62,12 +62,12 @@ export default function HowItWorks() {
 
                 {/* Step Number */}
                 <div className="relative inline-flex items-center justify-center mb-6">
-                  <div className="w-24 h-24 bg-orange/20 rounded-full flex items-center justify-center">
-                    <div className="w-20 h-20 bg-orange rounded-full flex items-center justify-center">
+                  <div className="w-24 h-24 bg-sage/20 rounded-full flex items-center justify-center">
+                    <div className="w-20 h-20 bg-sage rounded-full flex items-center justify-center">
                       <Icon className="w-10 h-10 text-white" />
                     </div>
                   </div>
-                  <span className="absolute -top-2 -right-2 w-8 h-8 bg-gold rounded-full flex items-center justify-center text-brown font-montserrat font-bold text-sm">
+                  <span className="absolute -top-2 -right-2 w-8 h-8 bg-persimmon rounded-full flex items-center justify-center text-white font-montserrat font-bold text-sm shadow-md">
                     {item.step}
                   </span>
                 </div>

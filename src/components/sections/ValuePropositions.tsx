@@ -13,7 +13,7 @@ const iconMap = {
 
 export default function ValuePropositions() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-oat">
       <div className="container-custom">
         <div className="text-center mb-12">
           <motion.h2
@@ -46,8 +46,8 @@ export default function ValuePropositions() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center group"
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-cream rounded-full mb-4 group-hover:bg-orange transition-colors duration-300">
-                  <Icon className="w-8 h-8 text-orange group-hover:text-white transition-colors duration-300" />
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4 shadow-sm group-hover:bg-sage group-hover:shadow-md transition-all duration-300">
+                  <Icon className="w-8 h-8 text-sage group-hover:text-white transition-colors duration-300" />
                 </div>
                 <h3 className="text-xl font-playfair font-semibold text-brown mb-2">
                   {prop.title}

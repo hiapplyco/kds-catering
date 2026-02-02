@@ -20,7 +20,7 @@ export default function DropOffPage() {
         "/images/food/glazed-salmon-noodles-meal-prep.jpg",
       ]}
       featuredVideo={{
-        src: "/videos/catering-trays.mp4",
+        src: "/videos/meatballs-marinara-tray.mp4",
         poster: "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
         title: "Ready to Serve",
         description: "Drop-off catering that's anything but ordinary. Every order arrives beautifully arranged, properly portioned, and ready to impress—with the same award-winning quality you'd expect from our full-service events.",

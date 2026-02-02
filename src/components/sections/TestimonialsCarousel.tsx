@@ -19,14 +19,14 @@ export default function TestimonialsCarousel() {
   };
 
   return (
-    <section className="py-20 bg-cream">
+    <section className="py-24 bg-chamomile">
       <div className="container-custom">
         <div className="text-center mb-12">
           <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+            className="text-sage font-montserrat font-semibold uppercase tracking-wider text-sm"
           >
             What People Say
           </motion.span>
@@ -35,7 +35,7 @@ export default function TestimonialsCarousel() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="section-heading mt-2"
+            className="text-3xl md:text-4xl font-playfair font-bold text-brown mt-2 mb-4"
           >
             Client Testimonials
           </motion.h2>
@@ -50,7 +50,12 @@ export default function TestimonialsCarousel() {
 
         <div className="max-w-4xl mx-auto relative">
           {/* Carousel */}
-          <div className="relative overflow-hidden">
+          <div 
+            className="relative overflow-hidden"
+            role="region"
+            aria-label="Testimonials carousel"
+            aria-live="polite"
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -62,7 +67,7 @@ export default function TestimonialsCarousel() {
               >
                 {/* Quote Icon */}
                 <div className="absolute top-6 left-6 md:top-8 md:left-8">
-                  <Quote className="w-12 h-12 text-orange/20" />
+                  <Quote className="w-12 h-12 text-sage/20" />
                 </div>
 
                 <div className="text-center pt-8">
@@ -76,8 +81,8 @@ export default function TestimonialsCarousel() {
                     ))}
                   </div>
 
-                  {/* Quote */}
-                  <blockquote className="text-lg md:text-xl text-brown/80 font-opensans leading-relaxed mb-8 italic">
+                  {/* Quote - Using Cormorant for pull quote style */}
+                  <blockquote className="text-lg md:text-xl text-brown/80 font-cormorant leading-relaxed mb-8 italic">
                     &ldquo;{TESTIMONIALS[currentIndex].quote}&rdquo;
                   </blockquote>
 
@@ -86,7 +91,7 @@ export default function TestimonialsCarousel() {
                     <p className="font-playfair font-semibold text-brown text-lg">
                       {TESTIMONIALS[currentIndex].name}
                     </p>
-                    <p className="text-orange font-montserrat text-sm">
+                    <p className="text-sage font-montserrat text-sm font-medium">
                       {TESTIMONIALS[currentIndex].event}
                     </p>
                     <p className="text-brown/50 text-xs mt-1">
@@ -102,29 +107,37 @@ export default function TestimonialsCarousel() {
           <div className="flex justify-center items-center space-x-4 mt-8">
             <button
               onClick={prev}
-              className="p-3 rounded-full bg-white shadow-md hover:bg-orange hover:text-white transition-colors"
+              className="p-3 rounded-full bg-white shadow-md hover:bg-sage hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
 
-            {/* Dots */}
-            <div className="flex space-x-2">
+            {/* Dots - with shape/weight cues beyond color */}
+            <div 
+              className="flex space-x-2"
+              role="tablist"
+              aria-label="Testimonial navigation"
+            >
               {TESTIMONIALS.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                    index === currentIndex ? "bg-orange" : "bg-brown/20"
+                  role="tab"
+                  aria-selected={index === currentIndex}
+                  aria-label={`Go to testimonial ${index + 1} of ${TESTIMONIALS.length}`}
+                  className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 ${
+                    index === currentIndex 
+                      ? "w-8 h-3 bg-orange rounded-full shadow-md" // Wider, taller, rounded pill for active
+                      : "w-2.5 h-2.5 bg-brown/20 rounded-full hover:bg-brown/40" // Small circle for inactive
                   }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
                 />
               ))}
             </div>
 
             <button
               onClick={next}
-              className="p-3 rounded-full bg-white shadow-md hover:bg-orange hover:text-white transition-colors"
+              className="p-3 rounded-full bg-white shadow-md hover:bg-sage hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5" />

@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand Colors from PRD
+        // Brand Colors — Light Brooklyn Comfort Palette (2026)
         orange: {
           DEFAULT: "#E67E22",
           50: "#FCF0E6",
@@ -22,6 +22,20 @@ const config: Config = {
           700: "#8A4C14",
           800: "#5C330D",
           900: "#2E1907",
+        },
+        // Soft Persimmon — lighter, friendlier accent
+        persimmon: {
+          DEFAULT: "#F4A574",
+          50: "#FEF6F0",
+          100: "#FDEDE1",
+          200: "#FBDBC3",
+          300: "#F8C9A5",
+          400: "#F4A574",
+          500: "#F08C4F",
+          600: "#E0712A",
+          700: "#B85A22",
+          800: "#90461A",
+          900: "#683312",
         },
         brown: {
           DEFAULT: "#5D4037",
@@ -44,6 +58,40 @@ const config: Config = {
           300: "#FFEAB7",
           400: "#FFE39F",
           500: "#FFDC87",
+        },
+        // Chamomile — warm neutral for cards/backgrounds
+        chamomile: {
+          DEFAULT: "#FAF6F1",
+          50: "#FFFFFF",
+          100: "#FAF6F1",
+          200: "#F5EDE3",
+          300: "#EFE4D5",
+          400: "#E9DBC7",
+          500: "#E3D2B9",
+        },
+        // Oat — soft warm white
+        oat: {
+          DEFAULT: "#F9F7F4",
+          50: "#FFFFFF",
+          100: "#F9F7F4",
+          200: "#F3EFE9",
+          300: "#EDE7DE",
+          400: "#E7DFD3",
+          500: "#E1D7C8",
+        },
+        // Sage — fresh accent for "light" positioning
+        sage: {
+          DEFAULT: "#9CAF88",
+          50: "#F4F6F2",
+          100: "#E9EDE5",
+          200: "#D3DBCB",
+          300: "#BDC9B1",
+          400: "#9CAF88",
+          500: "#7F9A6A",
+          600: "#657B54",
+          700: "#4C5C3F",
+          800: "#333D2A",
+          900: "#1A1F15",
         },
         gold: {
           DEFAULT: "#D4AF37",

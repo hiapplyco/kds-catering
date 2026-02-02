@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, Star, Check } from "lucide-react";
+import { Download, Star, Check, Users } from "lucide-react";
 import { MENU_CATEGORIES, DIETARY_FILTERS, PACKAGE_TIERS } from "@/lib/constants";
 import { menuItems, MenuItem } from "@/data/menu";
 import { CTASection } from "@/components/sections";
@@ -32,7 +32,7 @@ export default function MenuPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-cream">
+      <section className="relative pt-32 pb-20 bg-chamomile">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <motion.span
@@ -121,14 +121,17 @@ export default function MenuPage() {
         </div>
       </section>
 
-      {/* Package Tiers */}
-      <section className="py-16 bg-cream">
+      {/* Package Tiers - Restyled with true white cards */}
+      <section className="py-16 bg-oat">
         <div className="container-custom">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-playfair font-bold text-white mb-2">
+            <span className="text-sage font-montserrat font-semibold uppercase tracking-wider text-sm">
+              Catering Options
+            </span>
+            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-brown mt-2 mb-2">
               Catering Packages
             </h2>
-            <p className="text-white/70">
+            <p className="text-brown/60">
               Choose the perfect package for your event
             </p>
           </div>
@@ -142,57 +145,49 @@ export default function MenuPage() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 className={cn(
-                  "relative rounded-2xl p-6 transition-all duration-300",
+                  "relative rounded-2xl p-6 transition-all duration-300 border",
                   tier.popular
-                    ? "bg-orange text-white scale-105 shadow-xl"
-                    : "bg-white text-brown"
+                    ? "bg-white scale-105 shadow-xl border-orange/30 ring-2 ring-orange/20"
+                    : "bg-white shadow-md border-cream-200 hover:shadow-lg"
                 )}
               >
                 {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-brown text-xs font-montserrat font-bold px-3 py-1 rounded-full">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange text-white text-xs font-montserrat font-bold px-4 py-1.5 rounded-full shadow-md">
                     Most Popular
                   </div>
                 )}
 
-                <h3
-                  className={cn(
-                    "text-2xl font-playfair font-bold mb-1",
-                    tier.popular ? "text-white" : "text-brown"
-                  )}
-                >
+                {/* Thin serif title style */}
+                <h3 className="text-2xl font-cormorant font-semibold text-brown mb-1 tracking-wide">
                   {tier.name}
                 </h3>
-                <p
-                  className={cn(
-                    "text-sm mb-4",
-                    tier.popular ? "text-white/80" : "text-brown/60"
-                  )}
-                >
+                <p className="text-sm text-brown/60 mb-4">
                   {tier.description}
                 </p>
-                <p
-                  className={cn(
-                    "text-lg font-montserrat font-bold mb-4",
-                    tier.popular ? "text-white" : "text-orange"
-                  )}
-                >
-                  {tier.priceRange}
-                </p>
+                
+                {/* Price chip */}
+                <div className="inline-flex items-center bg-persimmon/10 text-persimmon px-3 py-1.5 rounded-full mb-4">
+                  <span className="text-sm font-montserrat font-bold">
+                    {tier.priceRange}
+                  </span>
+                </div>
+
+                {/* Serves metadata */}
+                <div className="flex items-center text-brown/50 text-xs mb-4">
+                  <Users className="w-3.5 h-3.5 mr-1" />
+                  <span>Serves 25+</span>
+                </div>
 
                 <ul className="space-y-2 mb-6">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-center text-sm">
                       <Check
                         className={cn(
-                          "w-4 h-4 mr-2",
-                          tier.popular ? "text-gold" : "text-orange"
+                          "w-4 h-4 mr-2 flex-shrink-0",
+                          tier.popular ? "text-orange" : "text-sage"
                         )}
                       />
-                      <span
-                        className={tier.popular ? "text-white/90" : "text-brown/70"}
-                      >
-                        {feature}
-                      </span>
+                      <span className="text-brown/70">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -207,10 +202,15 @@ export default function MenuPage() {
         <div className="container-custom">
           {/* Filters */}
           <div className="mb-12">
-            {/* Category Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 mb-6">
+            {/* Category Tabs with aria-pressed */}
+            <div 
+              className="flex flex-wrap justify-center gap-2 mb-6"
+              role="group"
+              aria-label="Filter by category"
+            >
               <button
                 onClick={() => setActiveCategory("all")}
+                aria-pressed={activeCategory === "all"}
                 className={cn(
                   "px-4 py-2 rounded-full font-montserrat text-sm font-medium transition-colors",
                   activeCategory === "all"
@@ -224,6 +224,7 @@ export default function MenuPage() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
+                  aria-pressed={activeCategory === cat.id}
                   className={cn(
                     "px-4 py-2 rounded-full font-montserrat text-sm font-medium transition-colors",
                     activeCategory === cat.id
@@ -236,17 +237,22 @@ export default function MenuPage() {
               ))}
             </div>
 
-            {/* Dietary Filters */}
-            <div className="flex justify-center gap-4">
+            {/* Dietary Filters with aria-pressed */}
+            <div 
+              className="flex justify-center gap-4"
+              role="group"
+              aria-label="Filter by dietary preference"
+            >
               {DIETARY_FILTERS.map((filter) => (
                 <button
                   key={filter.id}
                   onClick={() => toggleDietary(filter.id)}
+                  aria-pressed={activeDietary.includes(filter.id)}
                   className={cn(
                     "flex items-center px-4 py-2 rounded-full border-2 font-montserrat text-sm font-medium transition-colors",
                     activeDietary.includes(filter.id)
-                      ? "border-orange bg-orange/10 text-orange"
-                      : "border-brown/20 text-brown/60 hover:border-orange/50"
+                      ? "border-sage bg-sage/10 text-sage"
+                      : "border-brown/20 text-brown/60 hover:border-sage/50"
                   )}
                 >
                   <span className="mr-2">{filter.icon}</span>
@@ -295,7 +301,7 @@ function MenuItemCard({ item }: { item: MenuItem }) {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      className="bg-cream rounded-xl p-6 relative"
+      className="bg-white border border-cream-200 rounded-xl p-6 relative shadow-sm hover:shadow-md transition-shadow"
     >
       {item.popular && (
         <div className="absolute top-4 right-4 flex items-center text-gold">
@@ -306,7 +312,7 @@ function MenuItemCard({ item }: { item: MenuItem }) {
         </div>
       )}
 
-      <span className="text-xs font-montserrat text-orange uppercase tracking-wider">
+      <span className="text-xs font-montserrat text-sage uppercase tracking-wider font-semibold">
         {MENU_CATEGORIES.find((c) => c.id === item.category)?.name}
       </span>
 
@@ -323,7 +329,7 @@ function MenuItemCard({ item }: { item: MenuItem }) {
             return (
               <span
                 key={d}
-                className="text-xs bg-white rounded-full px-2 py-1 text-brown/70"
+                className="text-xs bg-chamomile rounded-full px-2 py-1 text-brown/70"
               >
                 {filter?.icon} {filter?.label}
               </span>

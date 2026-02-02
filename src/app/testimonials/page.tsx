@@ -105,7 +105,7 @@ export default function TestimonialsPage() {
             "/images/food/rainbow-vegetable-crudite-platter-hummus.jpg",
             "/images/food/jerk-chicken-rice-peas.jpeg",
             "/images/food/guacamole-bread-cups-edible-flowers.jpg",
-            "/images/food/shrimp-guacamole-mango-salsa-cups.jpg",
+            "/images/food/fruit-salad-cups.jpg",
             "/images/food/cookie-brownie-platters-strawberry-roses.jpg",
             "/images/food/roasted-turkey-cranberries-orange-herbs.jpg",
             "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
@@ -116,7 +116,7 @@ export default function TestimonialsPage() {
             "/images/food/rainbow-vegetable-crudite-platter-hummus.jpg",
             "/images/food/jerk-chicken-rice-peas.jpeg",
             "/images/food/guacamole-bread-cups-edible-flowers.jpg",
-            "/images/food/shrimp-guacamole-mango-salsa-cups.jpg",
+            "/images/food/fruit-salad-cups.jpg",
           ].map((src, i) => (
             <div key={i} className="relative w-48 h-32 flex-shrink-0 mx-2">
               <Image

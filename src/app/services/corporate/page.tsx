@@ -13,7 +13,7 @@ export default function CorporatePage() {
       title="Corporate Events"
       description="Impress clients and energize your team with premium catering from Chef Yaya. From board meetings to company celebrations, we deliver exceptional food with professional presentation that reflects your company's standards."
       heroImage="/images/food/catering-spread-caesar-salads.jpeg"
-      heroVideo="/videos/catering-trays.mp4"
+      heroVideo="/videos/rice-pilaf-buffet-setup.mp4"
       galleryImages={[
         "/images/food/boxed-lunches-sandwich-pasta-cookies.jpg",
         "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
@@ -21,7 +21,7 @@ export default function CorporatePage() {
         "/images/food/garden-salad-platter.jpg",
       ]}
       featuredVideo={{
-        src: "/videos/garden-salad-platter.mp4",
+        src: "/videos/street-tacos-platter.mp4",
         poster: "/images/food/garden-salad-platter.jpg",
         title: "Fresh & Professional",
         description: "Corporate events demand excellence. Our catering combines fresh, high-quality ingredients with impeccable presentation—perfect for board meetings, client lunches, and company celebrations that leave lasting impressions.",

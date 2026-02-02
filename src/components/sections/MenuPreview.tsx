@@ -35,14 +35,14 @@ const featuredItems = [
 
 export default function MenuPreview() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-oat">
       <div className="container-custom">
         <div className="text-center mb-12">
           <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+            className="text-sage font-montserrat font-semibold uppercase tracking-wider text-sm"
           >
             Taste the Comfort
           </motion.span>
@@ -51,7 +51,7 @@ export default function MenuPreview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="section-heading mt-2"
+            className="text-3xl md:text-4xl font-playfair font-bold text-brown mt-2 mb-4"
           >
             Featured Menu Items
           </motion.h2>
@@ -84,7 +84,7 @@ export default function MenuPreview() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group"
             >
-              <div className="relative h-64 rounded-xl overflow-hidden mb-4">
+              <div className="relative h-64 rounded-xl overflow-hidden mb-4 shadow-sm">
                 {item.video ? (
                   <video
                     className="absolute inset-0 w-full h-full object-cover"
@@ -109,7 +109,7 @@ export default function MenuPreview() {
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="absolute top-3 left-3 bg-orange text-white text-xs font-montserrat font-semibold px-3 py-1 rounded-full">
+                <span className="absolute top-3 left-3 bg-sage text-white text-xs font-montserrat font-semibold px-3 py-1 rounded-full">
                   {item.category}
                 </span>
               </div>

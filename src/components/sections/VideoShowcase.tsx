@@ -33,7 +33,7 @@ const showcaseVideos = [
 
 export default function VideoShowcase() {
   return (
-    <section className="py-20 bg-brown overflow-hidden">
+    <section className="py-24 bg-brown overflow-hidden">
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -41,7 +41,7 @@ export default function VideoShowcase() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-orange font-montserrat font-semibold uppercase tracking-wider text-sm"
+            className="text-persimmon font-montserrat font-semibold uppercase tracking-wider text-sm"
           >
             See Our Food in Action
           </motion.span>
@@ -60,7 +60,7 @@ export default function VideoShowcase() {
             transition={{ delay: 0.1 }}
             className="text-white/70 max-w-xl mx-auto"
           >
-            Watch our delicious dishes come to life. Click to expand and enjoy with sound.
+            Watch our delicious dishes come to life. <span className="text-persimmon">Tap for audio.</span>
           </motion.p>
           <div className="w-16 h-1 bg-gold mx-auto mt-4" />
         </div>
@@ -97,7 +97,7 @@ export default function VideoShowcase() {
         >
           <a
             href="/gallery"
-            className="inline-flex items-center gap-2 text-orange hover:text-orange/80 font-montserrat font-semibold transition-colors"
+            className="inline-flex items-center gap-2 text-persimmon hover:text-orange font-montserrat font-semibold transition-colors"
           >
             <Play className="w-5 h-5" />
             View More in Our Gallery

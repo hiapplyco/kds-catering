@@ -8,7 +8,7 @@ import { SERVICES } from "@/lib/constants";
 
 export default function ServicesGrid() {
   return (
-    <section className="py-20 bg-cream">
+    <section className="py-24 bg-chamomile">
       <div className="container-custom">
         <div className="text-center mb-12">
           <motion.span

@@ -4,9 +4,32 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Phone } from "lucide-react";
-import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
+import { Menu, X, ChevronDown, Phone, Calendar } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+
+// Simplified nav anchored around 3 key journeys
+const PRIMARY_NAV = [
+  {
+    label: "Plan Event",
+    href: "/services",
+    children: [
+      { label: "Weddings", href: "/services/weddings" },
+      { label: "Corporate Events", href: "/services/corporate" },
+      { label: "Private Parties", href: "/services/private-parties" },
+      { label: "Drop-Off Catering", href: "/services/drop-off" },
+    ],
+  },
+  { label: "Explore Menu", href: "/menu" },
+  { label: "See Our Work", href: "/gallery" },
+];
+
+// Secondary nav for mobile and footer
+const SECONDARY_NAV = [
+  { label: "About", href: "/about" },
+  { label: "Testimonials", href: "/testimonials" },
+  { label: "FAQ", href: "/faq" },
+];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,9 +70,9 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Simplified 3 key journeys */}
           <div className="hidden lg:flex items-center space-x-8">
-            {NAV_LINKS.map((link) => (
+            {PRIMARY_NAV.map((link) => (
               <div
                 key={link.label}
                 className="relative"
@@ -110,24 +133,32 @@ export default function Header() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center space-x-4">
+          {/* Dual CTA Chip - "Book Tasting" + Phone */}
+          <div className="hidden lg:flex items-center space-x-3">
+            {/* Phone Link - Ghost Style */}
             <a
               href={`tel:${SITE_CONFIG.phone}`}
               className={cn(
-                "flex items-center space-x-2 transition-colors",
+                "flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300",
                 isScrolled
-                  ? "text-brown hover:text-orange"
-                  : "text-white hover:text-orange drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                  ? "text-brown hover:bg-brown/5 hover:text-orange"
+                  : "text-white/90 hover:bg-white/10 hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
               )}
+              aria-label={`Call us at ${SITE_CONFIG.phone}`}
             >
               <Phone className="w-4 h-4" />
               <span className="font-montserrat text-sm font-medium">
                 {SITE_CONFIG.phone}
               </span>
             </a>
-            <Link href="/contact" className="btn-primary text-sm py-3 px-6">
-              Book Now
+            
+            {/* Book Tasting - Primary CTA */}
+            <Link 
+              href="/contact?type=tasting" 
+              className="btn-primary text-sm py-2.5 px-5 flex items-center space-x-2"
+            >
+              <Calendar className="w-4 h-4" />
+              <span>Book Tasting</span>
             </Link>
           </div>
 
@@ -141,6 +172,7 @@ export default function Header() {
                 : "text-white hover:text-orange drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
             )}
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -150,7 +182,7 @@ export default function Header() {
           </button>
         </nav>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Lighter expandable pattern */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -160,46 +192,81 @@ export default function Header() {
               transition={{ duration: 0.3 }}
               className="lg:hidden overflow-hidden"
             >
-              <div className="py-4 space-y-4 border-t border-cream-200 mt-4">
-                {NAV_LINKS.map((link) => (
-                  <div key={link.label}>
-                    {link.children ? (
-                      <div className="space-y-2">
-                        <span className="block font-montserrat font-semibold text-brown">
-                          {link.label}
-                        </span>
-                        <div className="pl-4 space-y-2">
-                          {link.children.map((child) => (
-                            <Link
-                              key={child.label}
-                              href={child.href}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                              className="block text-sm text-brown/70 hover:text-orange transition-colors"
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
+              <div className="py-4 space-y-2 border-t border-cream-200 mt-4 bg-white/95 backdrop-blur-sm rounded-lg px-4">
+                {/* Primary Navigation */}
+                <div className="space-y-1">
+                  <span className="text-xs font-montserrat font-semibold text-brown/50 uppercase tracking-wider px-2">
+                    Main
+                  </span>
+                  {PRIMARY_NAV.map((link) => (
+                    <div key={link.label}>
+                      {link.children ? (
+                        <div className="space-y-1">
+                          <span className="block px-2 py-2 font-montserrat font-semibold text-brown">
+                            {link.label}
+                          </span>
+                          <div className="pl-4 space-y-1 border-l-2 border-orange/20 ml-2">
+                            {link.children.map((child) => (
+                              <Link
+                                key={child.label}
+                                href={child.href}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="block px-2 py-1.5 text-sm text-brown/70 hover:text-orange transition-colors"
+                              >
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ) : (
+                      ) : (
+                        <Link
+                          href={link.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block px-2 py-2 font-montserrat font-semibold text-brown hover:text-orange transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Secondary Navigation - Collapsed/lighter */}
+                <div className="pt-3 border-t border-cream-200 space-y-1">
+                  <span className="text-xs font-montserrat font-semibold text-brown/50 uppercase tracking-wider px-2">
+                    More
+                  </span>
+                  <div className="flex flex-wrap gap-2 px-2">
+                    {SECONDARY_NAV.map((link) => (
                       <Link
+                        key={link.label}
                         href={link.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="block font-montserrat font-medium text-brown hover:text-orange transition-colors"
+                        className="text-sm text-brown/60 hover:text-orange transition-colors"
                       >
                         {link.label}
                       </Link>
-                    )}
+                    ))}
                   </div>
-                ))}
-                <div className="pt-4 border-t border-cream-200">
+                </div>
+
+                {/* CTA Section */}
+                <div className="pt-4 border-t border-cream-200 space-y-3">
                   <Link
-                    href="/contact"
+                    href="/contact?type=tasting"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="btn-primary w-full text-center"
+                    className="btn-primary w-full text-center flex items-center justify-center space-x-2"
                   >
-                    Book Now
+                    <Calendar className="w-4 h-4" />
+                    <span>Book Tasting</span>
                   </Link>
+                  <a
+                    href={`tel:${SITE_CONFIG.phone}`}
+                    className="btn-ghost w-full text-center flex items-center justify-center space-x-2"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>Call {SITE_CONFIG.phone}</span>
+                  </a>
                 </div>
               </div>
             </motion.div>
