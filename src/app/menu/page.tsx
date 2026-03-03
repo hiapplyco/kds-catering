@@ -66,7 +66,7 @@ export default function MenuPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              href="/contact"
+              href="#menu-items"
               className="btn-secondary inline-flex items-center"
             >
               View Full Menu Below ↓
@@ -225,7 +225,7 @@ export default function MenuPage() {
       </section>
 
       {/* Menu Items */}
-      <section className="py-20 bg-white">
+      <section id="menu-items" className="py-20 bg-white">
         <div className="container-custom">
           {/* Filters */}
           <div className="mb-12">

@@ -294,7 +294,7 @@ export default function TestimonialsPage() {
                   loop
                   playsInline
                 >
-                  <source src="/videos/catering-trays.mp4" type="video/mp4" />
+                  <source src="/videos/roasted-turkey.mp4" type="video/mp4" />
                 </video>
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-brown/80 to-transparent p-4">
                   <p className="text-white font-montserrat text-sm">

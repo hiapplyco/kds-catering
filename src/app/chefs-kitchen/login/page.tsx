@@ -26,9 +26,10 @@ export default function AdminLoginPage() {
     try {
       await signIn(email, password);
       router.push("/chefs-kitchen");
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const firebaseError = err as { code?: string };
       setError(
-        err.code === "auth/invalid-credential"
+        firebaseError.code === "auth/invalid-credential"
           ? "Invalid email or password"
           : "An error occurred. Please try again."
       );

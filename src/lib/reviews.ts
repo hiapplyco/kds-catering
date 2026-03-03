@@ -153,7 +153,6 @@ export function convertTestimonialsToReviews(testimonials: Array<{
  */
 async function fetchGoogleReviews(): Promise<Review[]> {
   if (!GOOGLE_API_KEY) {
-    console.log("[Reviews] Google API key not configured, using mock data");
     return mockGoogleReviews;
   }
 
@@ -172,7 +171,6 @@ async function fetchGoogleReviews(): Promise<Review[]> {
  */
 async function fetchYelpReviews(): Promise<Review[]> {
   if (!YELP_API_KEY) {
-    console.log("[Reviews] Yelp API key not configured, using mock data");
     return mockYelpReviews;
   }
 

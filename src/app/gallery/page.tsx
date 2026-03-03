@@ -7,7 +7,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { CTASection } from "@/components/sections";
 import { VideoModal } from "@/components/ui";
 import { cn } from "@/lib/utils";
-import { useGallery, FirestoreGalleryItem } from "@/lib/firestore-hooks";
+import { useGallery } from "@/lib/firestore-hooks";
 
 const galleryCategories = [
   { id: "all", name: "All" },
@@ -46,6 +46,20 @@ const fallbackVerticalVideos = [
     poster: "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
     title: "Comfort Food Catering",
     description: "Creamy mashed potatoes & mac and cheese",
+  },
+  {
+    id: "vv2",
+    src: "/videos/sandwich-platter-vertical.mp4",
+    poster: "/images/food/boxed-lunches-sandwich-pasta-cookies.jpg",
+    title: "Gourmet Sandwich Platters",
+    description: "Fresh-made sliders with all the fixings",
+  },
+  {
+    id: "vv3",
+    src: "/videos/buffet-line-service-vertical.mp4",
+    poster: "/images/food/fried-chicken-rice-buffet-edible-flowers.jpg",
+    title: "Full-Service Buffet",
+    description: "Guests served from a beautiful spread",
   },
 ];
 
@@ -90,7 +104,7 @@ export default function GalleryPage() {
   const { data: firestoreItems, loading } = useGallery();
 
   // Split Firestore items into images and videos
-  const { images, videos } = useMemo(() => {
+  const { images } = useMemo(() => {
     if (firestoreItems.length === 0 && !loading) {
       // Use fallbacks
       return {
@@ -100,17 +114,13 @@ export default function GalleryPage() {
           alt: img.alt,
           category: normalizeCategory(img.category),
         })),
-        videos: [] as FirestoreGalleryItem[],
       };
     }
 
     const imgs: { id: string; src: string; alt: string; category: string }[] = [];
-    const vids: FirestoreGalleryItem[] = [];
 
     for (const item of firestoreItems) {
-      if (item.type === "video") {
-        vids.push(item);
-      } else {
+      if (item.type !== "video") {
         imgs.push({
           id: item.id,
           src: item.url,
@@ -129,26 +139,14 @@ export default function GalleryPage() {
           alt: img.alt,
           category: normalizeCategory(img.category),
         })),
-        videos: vids,
       };
     }
 
-    return { images: imgs, videos: vids };
+    return { images: imgs };
   }, [firestoreItems, loading]);
 
-  // Use Firestore videos or fallbacks
-  const displayVideos = useMemo(() => {
-    if (videos.length > 0) {
-      return videos.map(v => ({
-        id: v.id,
-        src: v.url,
-        poster: v.thumbnailUrl || "",
-        title: v.alt || "",
-        description: normalizeCategory(v.category),
-      }));
-    }
-    return fallbackGalleryVideos;
-  }, [videos]);
+  // Always use curated fallback videos for quality control
+  const displayVideos = fallbackGalleryVideos;
 
   const filteredImages = useMemo(() => {
     return images.filter(
