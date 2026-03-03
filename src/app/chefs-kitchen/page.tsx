@@ -187,6 +187,38 @@ export default function AdminDashboard() {
         </div>
       </div>
 
+      {/* Live Preview */}
+      <div>
+        <h2 className="text-xl font-playfair font-bold text-brown mb-4">
+          Live Preview
+        </h2>
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-400" />
+              <div className="w-3 h-3 rounded-full bg-yellow-400" />
+              <div className="w-3 h-3 rounded-full bg-green-400" />
+            </div>
+            <span className="text-sm text-brown/50 font-mono ml-2">
+              kdscatering.web.app
+            </span>
+            <a
+              href="https://kdscatering.web.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-auto text-xs text-orange hover:underline font-montserrat"
+            >
+              Open in new tab ↗
+            </a>
+          </div>
+          <iframe
+            src="https://kdscatering.web.app"
+            className="w-full h-[600px] border-0"
+            title="Live site preview"
+          />
+        </div>
+      </div>
+
       {/* Getting Started Guide */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

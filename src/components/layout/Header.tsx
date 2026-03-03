@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Phone, Calendar } from "lucide-react";
-import { SITE_CONFIG } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/firestore-hooks";
 import { cn } from "@/lib/utils";
 
 // Simplified nav anchored around 3 key journeys
@@ -32,6 +32,7 @@ const SECONDARY_NAV = [
 ];
 
 export default function Header() {
+  const { data: SITE_CONFIG } = useSiteSettings();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -50,7 +51,7 @@ export default function Header() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
           ? "bg-white/95 backdrop-blur-md shadow-md py-2"
-          : "bg-transparent py-4"
+          : "bg-black/20 backdrop-blur-sm py-4"
       )}
     >
       <div className="container-custom">
@@ -64,7 +65,7 @@ export default function Header() {
               height={140}
               className={cn(
                 "transition-all duration-300",
-                isScrolled ? "w-16 h-16 md:w-20 md:h-20" : "w-24 h-24 md:w-32 md:h-32"
+                isScrolled ? "w-16 h-16 md:w-20 md:h-20" : "w-28 h-28 md:w-36 md:h-36"
               )}
               priority
             />
@@ -133,7 +134,7 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Dual CTA Chip - "Book Tasting" + Phone */}
+          {/* Dual CTA - Phone + Book Your Event */}
           <div className="hidden lg:flex items-center space-x-3">
             {/* Phone Link - Ghost Style */}
             <a
@@ -152,13 +153,13 @@ export default function Header() {
               </span>
             </a>
             
-            {/* Book Tasting - Primary CTA */}
+            {/* Book Your Event - Primary CTA */}
             <Link 
-              href="/contact?type=tasting" 
+              href="/contact" 
               className="btn-primary text-sm py-2.5 px-5 flex items-center space-x-2"
             >
               <Calendar className="w-4 h-4" />
-              <span>Book Tasting</span>
+              <span>Book Your Event</span>
             </Link>
           </div>
 
@@ -253,12 +254,12 @@ export default function Header() {
                 {/* CTA Section */}
                 <div className="pt-4 border-t border-cream-200 space-y-3">
                   <Link
-                    href="/contact?type=tasting"
+                    href="/contact"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="btn-primary w-full text-center flex items-center justify-center space-x-2"
                   >
                     <Calendar className="w-4 h-4" />
-                    <span>Book Tasting</span>
+                    <span>Book Your Event</span>
                   </Link>
                   <a
                     href={`tel:${SITE_CONFIG.phone}`}

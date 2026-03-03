@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Star, Send, ExternalLink, CheckCircle } from "lucide-react";
 import { REVIEW_LINKS } from "@/lib/reviews";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 interface FormData {
   name: string;
@@ -38,13 +40,23 @@ export default function TestimonialForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // TODO: Connect to API endpoint when backend is ready
-    // For now, simulate submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    console.log("Testimonial submitted:", formData);
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    try {
+      await addDoc(collection(db, "testimonials"), {
+        name: formData.name,
+        email: formData.email,
+        event: formData.eventType,
+        quote: formData.testimonial,
+        rating: formData.rating,
+        date: new Date().toISOString().split("T")[0],
+        approved: false,
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting testimonial:", error);
+      alert("Failed to submit. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {

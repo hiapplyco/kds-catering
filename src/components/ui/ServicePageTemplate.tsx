@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Quote, Star } from "lucide-react";
 import { CTASection } from "@/components/sections";
-import { TESTIMONIALS } from "@/lib/constants";
+import { useTestimonials } from "@/lib/firestore-hooks";
 
 interface ServicePageTemplateProps {
   title: string;
@@ -63,7 +63,8 @@ export default function ServicePageTemplate({
   heroOverlayColor = "brown",
 }: ServicePageTemplateProps) {
   // Get a relevant testimonial
-  const testimonial = TESTIMONIALS[testimonialIndex % TESTIMONIALS.length];
+  const { data: TESTIMONIALS } = useTestimonials();
+  const testimonial = TESTIMONIALS.length > 0 ? TESTIMONIALS[testimonialIndex % TESTIMONIALS.length] : null;
 
   return (
     <>
@@ -91,7 +92,7 @@ export default function ServicePageTemplate({
           <div className={`absolute inset-0 bg-gradient-to-r ${overlayColors[heroOverlayColor]}`} />
         </div>
 
-        <div className="container-custom relative z-10 pt-24 pb-16">
+        <div className="container-custom relative z-10 pt-36 md:pt-40 pb-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -165,7 +166,7 @@ export default function ServicePageTemplate({
       </section>
 
       {/* Inline Testimonial Block - Dynamic */}
-      <section className="py-16 bg-chamomile">
+      {testimonial && <section className="py-16 bg-chamomile">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -188,7 +189,7 @@ export default function ServicePageTemplate({
             <p className="text-sm text-orange">{testimonial.event}</p>
           </motion.div>
         </div>
-      </section>
+      </section>}
 
       {/* Client Logos - If provided */}
       {clientLogos.length > 0 && (

@@ -5,11 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Calendar, MessageCircle, Utensils } from "lucide-react";
-import { SITE_CONFIG } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/firestore-hooks";
 
 type CTAContext = "default" | "menu" | "gallery" | "engaged";
 
 export default function MobileCTA() {
+  const { data: SITE_CONFIG } = useSiteSettings();
   const [isVisible, setIsVisible] = useState(false);
   const [ctaContext, setCtaContext] = useState<CTAContext>("default");
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -81,9 +82,9 @@ export default function MobileCTA() {
         className: "bg-sage text-white",
       },
       secondary: {
-        href: "/contact?type=tasting",
+        href: "/contact",
         icon: Utensils,
-        label: "Book Tasting",
+        label: "Book Your Event",
         className: "bg-orange text-white",
       },
     },
@@ -103,9 +104,9 @@ export default function MobileCTA() {
     },
     engaged: {
       primary: {
-        href: "/contact?type=tasting",
+        href: "/contact",
         icon: Calendar,
-        label: "Book Tasting",
+        label: "Book Your Event",
         className: "bg-orange text-white",
       },
       secondary: {

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Star, Quote, ArrowRight, Filter } from "lucide-react";
-import { TESTIMONIALS } from "@/lib/constants";
+import { useTestimonials, FirestoreTestimonial } from "@/lib/firestore-hooks";
 import { 
   getAggregatedReviews, 
   ReviewsResponse, 
@@ -23,11 +23,21 @@ export default function TestimonialsPage() {
   const [reviewsData, setReviewsData] = useState<ReviewsResponse | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [isLoading, setIsLoading] = useState(true);
+  const { data: firestoreTestimonials } = useTestimonials();
 
   useEffect(() => {
     async function loadReviews() {
       try {
-        const data = await getAggregatedReviews(TESTIMONIALS);
+        // Convert Firestore testimonials to the format expected by getAggregatedReviews
+        const testimonialsForReviews = firestoreTestimonials.map((t, i) => ({
+          id: Number(t.id) || i + 1,
+          name: t.name,
+          event: t.event,
+          quote: t.quote,
+          rating: t.rating,
+          date: t.date,
+        }));
+        const data = await getAggregatedReviews(testimonialsForReviews);
         setReviewsData(data);
       } catch (error) {
         console.error("Failed to load reviews:", error);
@@ -36,7 +46,7 @@ export default function TestimonialsPage() {
       }
     }
     loadReviews();
-  }, []);
+  }, [firestoreTestimonials]);
 
   const filteredReviews = reviewsData?.reviews.filter(
     (r) => activeFilter === "all" || r.source === activeFilter
@@ -52,7 +62,7 @@ export default function TestimonialsPage() {
   return (
     <>
       {/* Hero Section with Video Background */}
-      <section className="relative pt-32 pb-20 bg-cream overflow-hidden">
+      <section className="relative pt-40 md:pt-44 pb-20 bg-cream overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 opacity-10">
           <video

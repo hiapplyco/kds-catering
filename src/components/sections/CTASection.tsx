@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Calendar, Phone } from "lucide-react";
-import { SITE_CONFIG } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/firestore-hooks";
 
 export default function CTASection() {
+  const { data: SITE_CONFIG } = useSiteSettings();
   return (
     <section className="py-20 bg-persimmon relative overflow-hidden">
       {/* Decorative Elements */}

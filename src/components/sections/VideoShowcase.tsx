@@ -7,26 +7,34 @@ import { VideoModal } from "@/components/ui";
 const showcaseVideos = [
   {
     id: 1,
-    src: "/videos/roasted-turkey.mp4",
-    poster: "/images/food/roasted-turkey-cranberries-orange-herbs.jpg",
-    title: "Holiday Roasted Turkey",
-    description: "Perfectly seasoned with fresh herbs",
+    src: "/videos/showcase-1.mp4",
+    poster: "/images/food/grilled-salmon-asparagus-carrots.jpg",
+    title: "Chef Yaya's Kitchen",
+    description: "Behind the scenes with Chef Yaya",
     orientation: "vertical" as const,
   },
   {
     id: 2,
-    src: "/videos/decorative-salad.mp4",
-    poster: "/images/food/rainbow-vegetable-crudite-platter-hummus.jpg",
-    title: "Artisan Salad Presentation",
-    description: "Fresh & beautifully arranged",
+    src: "/videos/showcase-2.mp4",
+    poster: "/images/food/pastry-cups-cream-scallion.jpg",
+    title: "Elegant Appetizers",
+    description: "Artisan bites crafted with care",
     orientation: "vertical" as const,
   },
   {
     id: 3,
-    src: "/videos/mashed-potatoes-mac-cheese-vertical.mp4",
-    poster: "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
+    src: "/videos/showcase-3.mp4",
+    poster: "/images/food/beet-salmon-tasting-spoons.jpg",
     title: "Comfort Food Classics",
-    description: "Creamy mashed potatoes & mac and cheese",
+    description: "Soul food with a gourmet twist",
+    orientation: "vertical" as const,
+  },
+  {
+    id: 4,
+    src: "/videos/showcase-4.mp4",
+    poster: "/images/food/falafel-pesto-microgreens.jpg",
+    title: "Event Catering",
+    description: "From prep to plate — pure perfection",
     orientation: "vertical" as const,
   },
 ];
@@ -74,7 +82,7 @@ export default function VideoShowcase() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 }}
-              className="w-full max-w-[280px] md:max-w-[300px]"
+              className="w-full max-w-[240px] md:max-w-[260px]"
             >
               <VideoModal
                 src={video.src}

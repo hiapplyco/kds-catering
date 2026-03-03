@@ -3,20 +3,23 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
-import { TESTIMONIALS } from "@/lib/constants";
+import { useTestimonials } from "@/lib/firestore-hooks";
 
 export default function TestimonialsCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { data: testimonials } = useTestimonials();
 
   const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
   };
 
   const prev = () => {
     setCurrentIndex(
-      (prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
     );
   };
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section className="py-24 bg-chamomile">
@@ -73,7 +76,7 @@ export default function TestimonialsCarousel() {
                 <div className="text-center pt-8">
                   {/* Rating */}
                   <div className="flex justify-center space-x-1 mb-6">
-                    {[...Array(TESTIMONIALS[currentIndex].rating)].map((_, i) => (
+                    {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
                       <Star
                         key={i}
                         className="w-5 h-5 text-gold fill-gold"
@@ -83,19 +86,19 @@ export default function TestimonialsCarousel() {
 
                   {/* Quote - Using Cormorant for pull quote style */}
                   <blockquote className="text-lg md:text-xl text-brown/80 font-cormorant leading-relaxed mb-8 italic">
-                    &ldquo;{TESTIMONIALS[currentIndex].quote}&rdquo;
+                    &ldquo;{testimonials[currentIndex].quote}&rdquo;
                   </blockquote>
 
                   {/* Author */}
                   <div>
                     <p className="font-playfair font-semibold text-brown text-lg">
-                      {TESTIMONIALS[currentIndex].name}
+                      {testimonials[currentIndex].name}
                     </p>
                     <p className="text-sage font-montserrat text-sm font-medium">
-                      {TESTIMONIALS[currentIndex].event}
+                      {testimonials[currentIndex].event}
                     </p>
                     <p className="text-brown/50 text-xs mt-1">
-                      {TESTIMONIALS[currentIndex].date}
+                      {testimonials[currentIndex].date}
                     </p>
                   </div>
                 </div>
@@ -119,13 +122,13 @@ export default function TestimonialsCarousel() {
               role="tablist"
               aria-label="Testimonial navigation"
             >
-              {TESTIMONIALS.map((_, index) => (
+              {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   role="tab"
                   aria-selected={index === currentIndex}
-                  aria-label={`Go to testimonial ${index + 1} of ${TESTIMONIALS.length}`}
+                  aria-label={`Go to testimonial ${index + 1} of ${testimonials.length}`}
                   className={`transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 ${
                     index === currentIndex 
                       ? "w-8 h-3 bg-orange rounded-full shadow-md" // Wider, taller, rounded pill for active

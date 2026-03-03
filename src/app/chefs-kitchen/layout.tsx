@@ -36,7 +36,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Allow login page without auth
-  const isLoginPage = pathname === "/chefs-kitchen/login";
+  const isLoginPage = pathname?.startsWith("/chefs-kitchen/login");
 
   useEffect(() => {
     if (!loading && !user && !isLoginPage) {

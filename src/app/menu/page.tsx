@@ -2,22 +2,24 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, Star, Check, Users } from "lucide-react";
-import { MENU_CATEGORIES, DIETARY_FILTERS, PACKAGE_TIERS } from "@/lib/constants";
-import { menuItems, MenuItem } from "@/data/menu";
+import { Star, Check, Users, AlertTriangle } from "lucide-react";
+import { MENU_CATEGORIES, DIETARY_FILTERS } from "@/lib/constants";
+import { useMenuItems, usePackages, FirestoreMenuItem } from "@/lib/firestore-hooks";
 import { CTASection } from "@/components/sections";
 import { cn } from "@/lib/utils";
 
 export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeDietary, setActiveDietary] = useState<string[]>([]);
+  const { data: menuItems } = useMenuItems();
+  const { data: packages } = usePackages();
 
-  const filteredItems = menuItems.filter((item) => {
+  const filteredItems = menuItems.filter((item) => item.active !== false).filter((item) => {
     const categoryMatch =
       activeCategory === "all" || item.category === activeCategory;
     const dietaryMatch =
       activeDietary.length === 0 ||
-      activeDietary.every((d) => item.dietary.includes(d));
+      activeDietary.every((d) => (item.dietary || []).includes(d));
     return categoryMatch && dietaryMatch;
   });
 
@@ -32,7 +34,7 @@ export default function MenuPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-chamomile">
+      <section className="relative pt-40 md:pt-44 pb-20 bg-chamomile">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <motion.span
@@ -64,11 +66,10 @@ export default function MenuPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              href="/menu.pdf"
+              href="/contact"
               className="btn-secondary inline-flex items-center"
             >
-              <Download className="w-5 h-5 mr-2" />
-              Download Full Menu PDF
+              View Full Menu Below ↓
             </motion.a>
           </div>
         </div>
@@ -77,11 +78,12 @@ export default function MenuPage() {
       {/* Video Showcase */}
       <section className="py-16 bg-brown">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              className="text-center mb-10"
             >
               <span className="text-gold font-montserrat font-semibold uppercase tracking-wider text-sm">
                 Crafted With Care
@@ -89,34 +91,59 @@ export default function MenuPage() {
               <h2 className="text-3xl md:text-4xl font-playfair font-bold text-white mt-2 mb-4">
                 See Our Dishes Come to Life
               </h2>
-              <div className="w-16 h-1 bg-gold mb-6" />
-              <p className="text-white/80 leading-relaxed mb-6">
+              <div className="w-16 h-1 bg-gold mx-auto mb-6" />
+              <p className="text-white/80 leading-relaxed max-w-2xl mx-auto">
                 Every dish from KDS Comfort Food is prepared with love and attention
                 to detail. From perfectly roasted meats to beautifully arranged
                 platters, Chef Yaya brings artistry to every meal.
               </p>
-              <p className="text-white/60 text-sm">
-                Watch our culinary team in action and see why our clients call our
-                presentations &ldquo;consistently clean, polished, and visually appealing.&rdquo;
-              </p>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative rounded-2xl overflow-hidden shadow-2xl"
-            >
-              <video
-                className="w-full aspect-video object-cover"
-                poster="/images/food/braised-oxtails.jpg"
-                controls
-                playsInline
-                preload="metadata"
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative rounded-2xl overflow-hidden shadow-2xl group"
               >
-                <source src="/videos/roasted-turkey.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </motion.div>
+                <video
+                  className="w-full aspect-video object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src="/videos/roasted-turkey.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-brown/70 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4">
+                  <span className="text-white/90 font-playfair text-lg font-semibold">Roasted Turkey</span>
+                  <p className="text-white/60 text-sm font-montserrat">Perfectly golden & carved to order</p>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative rounded-2xl overflow-hidden shadow-2xl group"
+              >
+                <video
+                  className="w-full aspect-video object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src="/videos/rice-pilaf-buffet-setup.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-brown/70 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4">
+                  <span className="text-white/90 font-playfair text-lg font-semibold">Buffet Setup</span>
+                  <p className="text-white/60 text-sm font-montserrat">Elegant service, every time</p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -137,7 +164,7 @@ export default function MenuPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {PACKAGE_TIERS.map((tier, index) => (
+            {packages.map((tier, index) => (
               <motion.div
                 key={tier.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -288,13 +315,27 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* Allergen Notice */}
+      <section className="py-8 bg-cream">
+        <div className="container-custom">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="flex items-center justify-center space-x-2 text-brown/70 text-sm">
+              <AlertTriangle className="w-4 h-4 text-orange" />
+              <p>
+                Please inform us of any dietary restrictions or allergies when booking your event.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <CTASection />
     </>
   );
 }
 
-function MenuItemCard({ item }: { item: MenuItem }) {
+function MenuItemCard({ item }: { item: FirestoreMenuItem }) {
   return (
     <motion.div
       layout
@@ -322,9 +363,9 @@ function MenuItemCard({ item }: { item: MenuItem }) {
 
       <p className="text-brown/60 text-sm mb-4">{item.description}</p>
 
-      {item.dietary.length > 0 && (
+      {(item.dietary || []).length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {item.dietary.map((d) => {
+          {(item.dietary || []).map((d) => {
             const filter = DIETARY_FILTERS.find((f) => f.id === d);
             return (
               <span
@@ -335,6 +376,20 @@ function MenuItemCard({ item }: { item: MenuItem }) {
               </span>
             );
           })}
+        </div>
+      )}
+
+      {/* Allergen badges (for future use) */}
+      {(item.allergens || []).length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mt-2">
+          {(item.allergens || []).map((allergen) => (
+            <span
+              key={allergen}
+              className="text-xs bg-red-50 text-red-700 border border-red-200 rounded-full px-2 py-0.5 font-medium"
+            >
+              ⚠ Contains {allergen}
+            </span>
+          ))}
         </div>
       )}
     </motion.div>

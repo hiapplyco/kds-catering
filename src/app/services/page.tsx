@@ -12,7 +12,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-cream">
+      <section className="relative pt-40 md:pt-44 pb-20 bg-cream">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <motion.span
@@ -41,6 +41,37 @@ export default function ServicesPage() {
               catering solution for every occasion.
             </motion.p>
           </div>
+        </div>
+      </section>
+
+      {/* Cinematic Video Interlude */}
+      <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        >
+          <source src="/videos/meatballs-marinara-tray.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-brown/60" />
+        <div className="relative h-full flex items-center justify-center text-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="text-gold font-montserrat font-semibold uppercase tracking-[0.3em] text-sm">
+              Crafted With Passion
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-white mt-3">
+              Every Detail Matters
+            </h2>
+            <div className="w-20 h-0.5 bg-gold mx-auto mt-6" />
+          </motion.div>
         </div>
       </section>
 

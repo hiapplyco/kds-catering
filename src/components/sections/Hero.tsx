@@ -85,7 +85,7 @@ export default function Hero() {
       <div className="absolute bottom-20 right-10 w-40 h-40 bg-gold/20 rounded-full blur-3xl" />
 
       {/* Content */}
-      <div className="container-custom relative z-10 pt-24 pb-32">
+      <div className="container-custom relative z-10 pt-36 md:pt-40 pb-32">
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div

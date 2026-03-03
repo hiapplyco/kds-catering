@@ -13,7 +13,6 @@ export default function PrivatePartiesPage() {
       title="Private Parties"
       description="Celebrate life's moments with food that brings people together. Birthday parties, anniversaries, family reunions, and more—Chef Yaya helps you create memorable gatherings with delicious cuisine."
       heroImage="/images/food/buffet-line-rice-beans-empanadas-chicken.jpg"
-      heroVideo="/videos/catering-trays.mp4"
       galleryImages={[
         "/images/food/guacamole-bread-cups-edible-flowers.jpg",
         "/images/food/fresh-fruit-platter.jpg",
@@ -21,8 +20,8 @@ export default function PrivatePartiesPage() {
         "/images/food/fruit-salad-cups.jpg",
       ]}
       featuredVideo={{
-        src: "/videos/salmon-seafood-dish.mp4",
-        poster: "/images/food/glazed-salmon-noodles-meal-prep.jpg",
+        src: "/videos/private-events-action.mp4",
+        poster: "/images/food/buffet-line-rice-beans-empanadas-chicken.jpg",
         title: "Party-Perfect Cuisine",
         description: "From intimate gatherings to grand celebrations, we create food that brings people together. Our signature dishes—like perfectly glazed salmon and savory comfort classics—make every party unforgettable.",
       }}

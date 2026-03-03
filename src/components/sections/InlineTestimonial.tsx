@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import { TESTIMONIALS } from "@/lib/constants";
+import { useTestimonials } from "@/lib/firestore-hooks";
 
 interface InlineTestimonialProps {
   testimonialIndex?: number;
@@ -13,7 +13,9 @@ export default function InlineTestimonial({
   testimonialIndex = 0,
   variant = "light" 
 }: InlineTestimonialProps) {
-  const testimonial = TESTIMONIALS[testimonialIndex % TESTIMONIALS.length];
+  const { data: testimonials } = useTestimonials();
+  if (testimonials.length === 0) return null;
+  const testimonial = testimonials[testimonialIndex % testimonials.length];
   
   // Truncate quote for inline display
   const shortQuote = testimonial.quote.length > 180 

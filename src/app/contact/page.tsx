@@ -11,10 +11,8 @@ import {
   Send,
   CheckCircle,
   Instagram,
-  Facebook,
-  Twitter,
 } from "lucide-react";
-import { SITE_CONFIG } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/firestore-hooks";
 import { cn } from "@/lib/utils";
 
 interface FormData {
@@ -30,6 +28,7 @@ interface FormData {
 }
 
 export default function ContactPage() {
+  const { data: SITE_CONFIG } = useSiteSettings();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -124,7 +123,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-cream">
+      <section className="relative pt-40 md:pt-44 pb-20 bg-cream">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <motion.span
@@ -150,6 +149,14 @@ export default function ContactPage() {
             >
               Ready to bring delicious comfort food to your next event? Fill out
               the form below and we&apos;ll get back to you within 24-48 hours.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-sm text-brown/60 mt-4 bg-cream-200/50 inline-block px-4 py-2 rounded-full"
+            >
+              🎉 We offer complimentary tastings for events with 50+ guests!
             </motion.p>
           </div>
         </div>
@@ -233,24 +240,6 @@ export default function ContactPage() {
                     aria-label="Instagram"
                   >
                     <Instagram className="w-5 h-5" />
-                  </a>
-                  <a
-                    href={SITE_CONFIG.socialMedia.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 bg-cream rounded-full flex items-center justify-center text-brown hover:bg-orange hover:text-white transition-colors"
-                    aria-label="Facebook"
-                  >
-                    <Facebook className="w-5 h-5" />
-                  </a>
-                  <a
-                    href={SITE_CONFIG.socialMedia.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 bg-cream rounded-full flex items-center justify-center text-brown hover:bg-orange hover:text-white transition-colors"
-                    aria-label="Twitter"
-                  >
-                    <Twitter className="w-5 h-5" />
                   </a>
                 </div>
               </div>

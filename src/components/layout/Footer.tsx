@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, Facebook, Twitter, Mail, Phone, MapPin } from "lucide-react";
-import { SITE_CONFIG, NAV_LINKS } from "@/lib/constants";
+import { Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { NAV_LINKS } from "@/lib/constants";
+import { useSiteSettings } from "@/lib/firestore-hooks";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { data: siteConfig } = useSiteSettings();
 
   return (
     <footer className="bg-brown text-white">
@@ -25,35 +27,17 @@ export default function Footer() {
               />
             </Link>
             <p className="text-white/70 text-sm leading-relaxed">
-              {SITE_CONFIG.description}
+              {siteConfig.description}
             </p>
             <div className="flex space-x-4">
               <a
-                href={SITE_CONFIG.socialMedia.instagram}
+                href={siteConfig.socialMedia.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-full bg-white/10 hover:bg-orange transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href={SITE_CONFIG.socialMedia.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-orange transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href={SITE_CONFIG.socialMedia.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-orange transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -106,26 +90,26 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href={`tel:${SITE_CONFIG.phone}`}
+                  href={`tel:${siteConfig.phone}`}
                   className="flex items-center space-x-3 text-white/70 hover:text-orange transition-colors text-sm"
                 >
                   <Phone className="w-5 h-5 text-orange" />
-                  <span>{SITE_CONFIG.phone}</span>
+                  <span>{siteConfig.phone}</span>
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${SITE_CONFIG.email}`}
+                  href={`mailto:${siteConfig.email}`}
                   className="flex items-center space-x-3 text-white/70 hover:text-orange transition-colors text-sm"
                 >
                   <Mail className="w-5 h-5 text-orange" />
-                  <span>{SITE_CONFIG.email}</span>
+                  <span>{siteConfig.email}</span>
                 </a>
               </li>
               <li>
                 <div className="flex items-start space-x-3 text-white/70 text-sm">
                   <MapPin className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-                  <span>{SITE_CONFIG.address}</span>
+                  <span>{siteConfig.address}</span>
                 </div>
               </li>
             </ul>
@@ -138,7 +122,7 @@ export default function Footer() {
         <div className="container-custom py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-white/50 text-sm">
-              &copy; {currentYear} {SITE_CONFIG.name}. All rights reserved.
+              &copy; {currentYear} {siteConfig.siteName}. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <Link

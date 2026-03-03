@@ -40,7 +40,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-cream">
+      <section className="relative pt-40 md:pt-44 pb-20 bg-cream">
         <div className="container-custom">
           <div className="max-w-3xl">
             <motion.span

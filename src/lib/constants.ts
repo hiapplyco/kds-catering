@@ -9,8 +9,6 @@ export const SITE_CONFIG = {
   address: "Brooklyn, New York",
   socialMedia: {
     instagram: "https://instagram.com/kdscomfortfood",
-    facebook: "https://facebook.com/kdscomfortfood",
-    twitter: "https://twitter.com/kdscomfortfood",
   },
 };
 
@@ -105,6 +103,7 @@ export const MENU_CATEGORIES = [
   { id: "appetizers", name: "Appetizers" },
   { id: "entrees", name: "Entrées" },
   { id: "sides", name: "Sides" },
+  { id: "pasta", name: "Pasta" },
   { id: "platters", name: "Platters" },
   { id: "desserts", name: "Desserts" },
   { id: "beverages", name: "Beverages" },
@@ -214,7 +213,7 @@ export const TESTIMONIALS = [
   },
   {
     id: 4,
-    name: "Satisfied Customer",
+    name: "C. Warner",
     event: "Private Dining",
     quote:
       "Chef Yaya, NEVER disappoints!!! This food is truly comforting and delicious. Trust me, you can taste the love in every dish. And the presentation is simply AMAZING! My absolute favorites are the creamed spinach, Macaroni and cheese, Rasta pasta, pan seared salmon in butter garlic sauce, and banana pudding. The food is very fresh with just the right amount of flavor—you'll love every bite!",
