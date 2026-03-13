@@ -141,7 +141,7 @@ export default function TestimonialsManagementPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-playfair font-bold text-brown">
+          <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-brown">
             Testimonials
           </h1>
           <p className="text-brown/60 mt-1 font-montserrat">
@@ -200,11 +200,11 @@ export default function TestimonialsManagementPage() {
               layout
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-white rounded-xl p-6 shadow-sm"
+              className="bg-white rounded-xl p-4 sm:p-6 shadow-sm"
             >
-              <div className="flex items-start justify-between mb-4">
+              <div className="flex items-start justify-between mb-3 sm:mb-4">
                 <div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-playfair font-bold text-brown">
                       {item.name}
                     </h3>
@@ -238,7 +238,7 @@ export default function TestimonialsManagementPage() {
                 &ldquo;{item.quote}&rdquo;
               </blockquote>
 
-              <div className="flex items-center justify-between pt-4 border-t border-brown/10">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 sm:pt-4 border-t border-brown/10 gap-2">
                 <span className="text-sm text-brown/50">{item.date}</span>
                 <div className="flex gap-2">
                   <button
@@ -284,10 +284,10 @@ export default function TestimonialsManagementPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl w-full max-w-[95vw] sm:max-w-lg max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-6 border-b border-brown/10 flex items-center justify-between">
+              <div className="p-4 sm:p-6 border-b border-brown/10 flex items-center justify-between">
                 <h2 className="text-xl font-playfair font-bold text-brown">
                   {editingItem ? "Edit Testimonial" : "Add Testimonial"}
                 </h2>
@@ -296,7 +296,7 @@ export default function TestimonialsManagementPage() {
                 </button>
               </div>
 
-              <div className="p-6 space-y-4">
+              <div className="p-4 sm:p-6 space-y-4">
                 <div>
                   <label className="block text-sm font-montserrat font-medium text-brown mb-1">
                     Name *
@@ -371,7 +371,7 @@ export default function TestimonialsManagementPage() {
                 </label>
               </div>
 
-              <div className="p-6 border-t border-brown/10 flex gap-3">
+              <div className="p-4 sm:p-6 border-t border-brown/10 flex gap-3">
                 <button
                   onClick={closeModal}
                   className="flex-1 px-4 py-2 border border-brown/20 text-brown font-montserrat rounded-lg hover:bg-cream"

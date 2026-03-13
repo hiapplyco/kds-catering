@@ -96,7 +96,7 @@ export default function SettingsPage() {
     <div className="space-y-6 max-w-2xl">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-playfair font-bold text-brown">
+        <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-brown">
           Site Settings
         </h1>
         <p className="text-brown/60 mt-1 font-montserrat">
@@ -108,7 +108,7 @@ export default function SettingsPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl p-6 shadow-sm space-y-6"
+        className="bg-white rounded-xl p-4 sm:p-6 shadow-sm space-y-6"
       >
         {/* Basic Info */}
         <div>

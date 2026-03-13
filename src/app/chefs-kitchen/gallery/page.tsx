@@ -298,7 +298,7 @@ export default function GalleryManagementPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-playfair font-bold text-brown">
+          <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-brown">
             Gallery Manager
           </h1>
           <p className="text-brown/60 mt-1 font-montserrat">

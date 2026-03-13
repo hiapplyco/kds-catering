@@ -101,10 +101,10 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-playfair font-bold text-brown">
+        <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-brown">
           Welcome to Chef&apos;s Kitchen
         </h1>
         <p className="text-brown/60 mt-1 font-montserrat">
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {[
           {
             label: "Menu Items",
@@ -149,14 +149,14 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-white rounded-xl p-6 shadow-sm"
+            className="bg-white rounded-xl p-4 sm:p-6 shadow-sm"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-brown/60 text-sm font-montserrat">
+                <p className="text-brown/60 text-xs sm:text-sm font-montserrat">
                   {stat.label}
                 </p>
-                <p className="text-3xl font-playfair font-bold text-brown mt-1">
+                <p className="text-2xl sm:text-3xl font-playfair font-bold text-brown mt-1">
                   {loading ? "—" : stat.value}
                 </p>
               </div>
@@ -192,10 +192,10 @@ export default function AdminDashboard() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl p-6 shadow-sm"
+          className="bg-white rounded-xl p-4 sm:p-6 shadow-sm"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-playfair font-bold text-brown flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-playfair font-bold text-brown flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-orange" />
               Reviews Overview
             </h2>
@@ -248,10 +248,10 @@ export default function AdminDashboard() {
 
       {/* Quick Actions */}
       <div>
-        <h2 className="text-xl font-playfair font-bold text-brown mb-4">
+        <h2 className="text-lg sm:text-xl font-playfair font-bold text-brown mb-3 sm:mb-4">
           Quick Actions
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {quickActions.map((action, index) => (
             <motion.div
               key={action.label}
@@ -261,50 +261,18 @@ export default function AdminDashboard() {
             >
               <Link
                 href={action.href}
-                className="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow group"
+                className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-white rounded-xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow group text-center sm:text-left"
               >
-                <div className={`${action.color} p-3 rounded-lg`}>
+                <div className={`${action.color} p-2.5 sm:p-3 rounded-lg`}>
                   <action.icon className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-montserrat font-medium text-brown group-hover:text-orange transition-colors">
+                <span className="font-montserrat font-medium text-xs sm:text-sm text-brown group-hover:text-orange transition-colors">
                   {action.label}
                 </span>
-                <ArrowRight className="w-4 h-4 text-brown/30 ml-auto group-hover:text-orange group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-brown/30 ml-auto group-hover:text-orange group-hover:translate-x-1 transition-all hidden sm:block" />
               </Link>
             </motion.div>
           ))}
-        </div>
-      </div>
-
-      {/* Live Preview */}
-      <div>
-        <h2 className="text-xl font-playfair font-bold text-brown mb-4">
-          Live Preview
-        </h2>
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-400" />
-              <div className="w-3 h-3 rounded-full bg-yellow-400" />
-              <div className="w-3 h-3 rounded-full bg-green-400" />
-            </div>
-            <span className="text-sm text-brown/50 font-mono ml-2">
-              kdscatering.web.app
-            </span>
-            <a
-              href="https://kdscatering.web.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-auto text-xs text-orange hover:underline font-montserrat"
-            >
-              Open in new tab ↗
-            </a>
-          </div>
-          <iframe
-            src="https://kdscatering.web.app"
-            className="w-full h-[600px] border-0"
-            title="Live site preview"
-          />
         </div>
       </div>
 
@@ -313,7 +281,7 @@ export default function AdminDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="bg-orange/10 border border-orange/20 rounded-xl p-6"
+        className="bg-orange/10 border border-orange/20 rounded-xl p-4 sm:p-6"
       >
         <h2 className="text-xl font-playfair font-bold text-brown mb-2">
           Getting Started

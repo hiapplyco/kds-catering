@@ -162,7 +162,7 @@ export default function MenuManagementPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-playfair font-bold text-brown">
+          <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-brown">
             Menu Items
           </h1>
           <p className="text-brown/60 mt-1 font-montserrat">
@@ -295,10 +295,10 @@ export default function MenuManagementPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl w-full max-w-[95vw] sm:max-w-lg max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-6 border-b border-brown/10 flex items-center justify-between">
+              <div className="p-4 sm:p-6 border-b border-brown/10 flex items-center justify-between">
                 <h2 className="text-xl font-playfair font-bold text-brown">
                   {editingItem ? "Edit Menu Item" : "Add Menu Item"}
                 </h2>
@@ -310,7 +310,7 @@ export default function MenuManagementPage() {
                 </button>
               </div>
 
-              <div className="p-6 space-y-4">
+              <div className="p-4 sm:p-6 space-y-4">
                 {/* Name */}
                 <div>
                   <label className="block text-sm font-montserrat font-medium text-brown mb-1">
@@ -418,7 +418,7 @@ export default function MenuManagementPage() {
                 </label>
               </div>
 
-              <div className="p-6 border-t border-brown/10 flex gap-3">
+              <div className="p-4 sm:p-6 border-t border-brown/10 flex gap-3">
                 <button
                   onClick={closeModal}
                   className="flex-1 px-4 py-2 border border-brown/20 text-brown font-montserrat rounded-lg hover:bg-cream transition-colors"

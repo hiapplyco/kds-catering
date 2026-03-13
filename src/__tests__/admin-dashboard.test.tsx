@@ -71,11 +71,10 @@ describe("Admin Dashboard Page", () => {
     expect(galleryLink).toHaveAttribute("href", "/chefs-kitchen/gallery?action=upload");
   });
 
-  it("renders live preview section", async () => {
+  it("does not render live preview section (removed)", async () => {
     mockGetDocs.mockResolvedValue({ size: 0 });
     render(<AdminDashboard />);
-    expect(screen.getByText("Live Preview")).toBeInTheDocument();
-    expect(screen.getByText("kdscatering.web.app")).toBeInTheDocument();
+    expect(screen.queryByText("Live Preview")).not.toBeInTheDocument();
   });
 
   it("renders getting started guide", async () => {

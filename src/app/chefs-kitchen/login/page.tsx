@@ -46,7 +46,7 @@ export default function AdminLoginPage() {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-orange rounded-full mb-4">
             <ChefHat className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-3xl font-playfair font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-white">
             Chef&apos;s Kitchen
           </h1>
           <p className="text-white/60 mt-2 font-montserrat">
@@ -55,7 +55,7 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm">
