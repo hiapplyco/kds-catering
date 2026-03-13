@@ -38,10 +38,11 @@ describe("Admin Login Page", () => {
     mockSignIn.mockResolvedValue({ user: { uid: "test" } });
   });
 
-  it("renders login form with email and password fields", () => {
+  it("renders login form with password field only", () => {
     renderLogin();
-    expect(screen.getByPlaceholderText("chef@kdscomfortfood.com")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/••••/)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Enter password")).toBeInTheDocument();
+    // No email field
+    expect(screen.queryByPlaceholderText("chef@kdscomfortfood.com")).not.toBeInTheDocument();
   });
 
   it("renders sign in button", () => {
@@ -51,7 +52,6 @@ describe("Admin Login Page", () => {
 
   it("renders Chef's Kitchen header", () => {
     renderLogin();
-    // &apos; renders as regular apostrophe in JSX
     expect(screen.getByText(/Chef.*s Kitchen/)).toBeInTheDocument();
   });
 
@@ -67,77 +67,64 @@ describe("Admin Login Page", () => {
     expect(link).toHaveAttribute("href", "/");
   });
 
-  it("has required email input", () => {
-    renderLogin();
-    const emailInput = screen.getByPlaceholderText("chef@kdscomfortfood.com");
-    expect(emailInput).toHaveAttribute("required");
-    expect(emailInput).toHaveAttribute("type", "email");
-  });
-
   it("has required password input", () => {
     renderLogin();
-    const passwordInput = screen.getByPlaceholderText(/••••/);
+    const passwordInput = screen.getByPlaceholderText("Enter password");
     expect(passwordInput).toHaveAttribute("required");
     expect(passwordInput).toHaveAttribute("type", "password");
   });
 
   it("has a password visibility toggle button", () => {
     renderLogin();
-    // The eye toggle button is type="button" (not submit)
     const buttons = screen.getAllByRole("button");
     const eyeButton = buttons.find((b) => b.getAttribute("type") === "button");
     expect(eyeButton).toBeTruthy();
   });
 
-  it("updates email field on input", () => {
+  it("updates password field on input", async () => {
     renderLogin();
-    const emailInput = screen.getByPlaceholderText("chef@kdscomfortfood.com") as HTMLInputElement;
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-    expect(emailInput.value).toBe("test@example.com");
-  });
-
-  it("updates password field on input", () => {
-    renderLogin();
-    const passwordInput = screen.getByPlaceholderText(/••••/) as HTMLInputElement;
+    const passwordInput = screen.getByPlaceholderText("Enter password") as HTMLInputElement;
     fireEvent.change(passwordInput, { target: { value: "secret123" } });
-    expect(passwordInput.value).toBe("secret123");
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("Enter password")).toHaveValue("secret123");
+    });
   });
 
-  it("shows error on invalid credentials", async () => {
+  it("signs in with hardcoded admin email and padded password", async () => {
+    renderLogin();
+
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
+      target: { value: "yaya" },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("Enter password")).toHaveValue("yaya");
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /sign in/i }));
+
+    await waitFor(() => {
+      expect(mockSignIn).toHaveBeenCalledWith(
+        expect.anything(),
+        "admin@kdscomfortfood.com",
+        "yaya!!kds"
+      );
+    });
+  });
+
+  it("shows error on wrong password", async () => {
     mockSignIn.mockRejectedValueOnce({ code: "auth/invalid-credential" });
 
     renderLogin();
 
-    fireEvent.change(screen.getByPlaceholderText("chef@kdscomfortfood.com"), {
-      target: { value: "wrong@test.com" },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/••••/), {
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
       target: { value: "wrong" },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /sign in/i }));
 
     await waitFor(() => {
-      expect(screen.getByText("Invalid email or password")).toBeInTheDocument();
-    });
-  });
-
-  it("shows generic error for unknown errors", async () => {
-    mockSignIn.mockRejectedValueOnce({ code: "auth/network-request-failed" });
-
-    renderLogin();
-
-    fireEvent.change(screen.getByPlaceholderText("chef@kdscomfortfood.com"), {
-      target: { value: "test@test.com" },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/••••/), {
-      target: { value: "pass" },
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: /sign in/i }));
-
-    await waitFor(() => {
-      expect(screen.getByText("An error occurred. Please try again.")).toBeInTheDocument();
+      expect(screen.getByText("Incorrect password")).toBeInTheDocument();
     });
   });
 });

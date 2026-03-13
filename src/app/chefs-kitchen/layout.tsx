@@ -136,7 +136,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
             <div className="px-4 py-2 mb-2">
               <p className="text-white/50 text-xs font-montserrat">Signed in as</p>
               <p className="text-white text-sm font-medium truncate">
-                {user.email}
+                Admin
               </p>
             </div>
             <button

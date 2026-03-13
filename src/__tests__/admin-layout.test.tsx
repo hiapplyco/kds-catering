@@ -40,14 +40,14 @@ describe("Admin Layout", () => {
     expect(screen.getByText("Settings")).toBeInTheDocument();
   });
 
-  it("shows user email in sidebar", () => {
+  it("shows Admin label in sidebar", () => {
     render(
       <AdminLayout>
         <div>Test Content</div>
       </AdminLayout>
     );
 
-    expect(screen.getByText("chef@kdscomfortfood.com")).toBeInTheDocument();
+    expect(screen.getByText("Admin")).toBeInTheDocument();
   });
 
   it("renders Chef's Kitchen logo text", () => {
@@ -128,6 +128,7 @@ describe("Admin Layout — Navigation Structure", () => {
       "/chefs-kitchen/menu",
       "/chefs-kitchen/gallery",
       "/chefs-kitchen/testimonials",
+      "/chefs-kitchen/reviews",
       "/chefs-kitchen/pricing",
       "/chefs-kitchen/settings",
     ];

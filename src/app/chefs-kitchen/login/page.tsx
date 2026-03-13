@@ -4,13 +4,14 @@ export const dynamic = "force-dynamic";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { Lock, Mail, Eye, EyeOff, ChefHat } from "lucide-react";
+import { Lock, Eye, EyeOff, ChefHat } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
+const ADMIN_EMAIL = "admin@kdscomfortfood.com";
+const PASSWORD_SUFFIX = "!!kds";
+
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -24,15 +25,10 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      await signIn(email, password);
+      await signIn(ADMIN_EMAIL, password + PASSWORD_SUFFIX);
       router.push("/chefs-kitchen");
-    } catch (err: unknown) {
-      const firebaseError = err as { code?: string };
-      setError(
-        firebaseError.code === "auth/invalid-credential"
-          ? "Invalid email or password"
-          : "An error occurred. Please try again."
-      );
+    } catch {
+      setError("Incorrect password");
     } finally {
       setLoading(false);
     }
@@ -67,24 +63,6 @@ export default function AdminLoginPage() {
               </div>
             )}
 
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-montserrat font-medium text-brown mb-2">
-                Email
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-brown/40" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-brown/20 rounded-lg focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none transition-colors"
-                  placeholder="chef@kdscomfortfood.com"
-                  required
-                />
-              </div>
-            </div>
-
             {/* Password */}
             <div>
               <label className="block text-sm font-montserrat font-medium text-brown mb-2">
@@ -97,8 +75,9 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-10 pr-12 py-3 border border-brown/20 rounded-lg focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none transition-colors"
-                  placeholder="••••••••"
+                  placeholder="Enter password"
                   required
+                  autoFocus
                 />
                 <button
                   type="button"
