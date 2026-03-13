@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Instagram, Facebook, Twitter, Globe, Mail, Phone, MapPin } from "lucide-react";
 import { NAV_LINKS } from "@/lib/constants";
 import { useSiteSettings } from "@/lib/firestore-hooks";
 
@@ -30,15 +30,25 @@ export default function Footer() {
               {siteConfig.description}
             </p>
             <div className="flex space-x-4">
-              <a
-                href={siteConfig.socialMedia.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-orange transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
+              {[
+                { icon: Instagram, url: siteConfig.socialMedia.instagram, label: "Instagram" },
+                { icon: Facebook, url: siteConfig.socialMedia.facebook, label: "Facebook" },
+                { icon: Twitter, url: siteConfig.socialMedia.twitter, label: "Twitter" },
+                { icon: Globe, url: siteConfig.socialMedia.tiktok, label: "TikTok" },
+              ]
+                .filter((link) => link.url)
+                .map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full bg-white/10 hover:bg-orange transition-colors"
+                    aria-label={link.label}
+                  >
+                    <link.icon className="w-5 h-5" />
+                  </a>
+                ))}
             </div>
           </div>
 

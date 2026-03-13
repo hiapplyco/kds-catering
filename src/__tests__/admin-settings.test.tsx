@@ -113,7 +113,7 @@ describe("Admin Settings Page", () => {
   it("renders deployment info note", async () => {
     render(<SettingsPage />);
     await waitFor(() => {
-      expect(screen.getByText(/Changes to these settings/)).toBeInTheDocument();
+      expect(screen.getByText(/Changes to contact info and social links/)).toBeInTheDocument();
     });
   });
 

@@ -10,6 +10,7 @@ import {
   UtensilsCrossed,
   Image as ImageIcon,
   Star,
+  BarChart3,
   DollarSign,
   Settings,
   LogOut,
@@ -25,6 +26,7 @@ const navItems = [
   { label: "Menu Items", href: "/chefs-kitchen/menu", icon: UtensilsCrossed },
   { label: "Gallery", href: "/chefs-kitchen/gallery", icon: ImageIcon },
   { label: "Testimonials", href: "/chefs-kitchen/testimonials", icon: Star },
+  { label: "Reviews", href: "/chefs-kitchen/reviews", icon: BarChart3 },
   { label: "Pricing", href: "/chefs-kitchen/pricing", icon: DollarSign },
   { label: "Settings", href: "/chefs-kitchen/settings", icon: Settings },
 ];

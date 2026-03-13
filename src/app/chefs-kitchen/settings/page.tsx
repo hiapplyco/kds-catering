@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Save, Globe, Phone, Mail, MapPin, Instagram, Facebook, Twitter } from "lucide-react";
+import { Save, Globe, Phone, Mail, MapPin, Instagram, Facebook, Twitter, Star, ExternalLink, Check } from "lucide-react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -18,6 +18,9 @@ interface SiteSettings {
     instagram: string;
     facebook: string;
     twitter: string;
+    tiktok: string;
+    yelp: string;
+    googleBusiness: string;
   };
 }
 
@@ -29,8 +32,11 @@ const defaultSettings: SiteSettings = {
   address: "Brooklyn, New York",
   socialMedia: {
     instagram: "https://instagram.com/kdscomfortfood",
-    facebook: "https://facebook.com/kdscomfortfood",
-    twitter: "https://twitter.com/kdscomfortfood",
+    facebook: "",
+    twitter: "",
+    tiktok: "",
+    yelp: "",
+    googleBusiness: "",
   },
 };
 
@@ -49,7 +55,12 @@ export default function SettingsPage() {
       const docRef = doc(db, "settings", "site");
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setSettings({ ...defaultSettings, ...docSnap.data() } as SiteSettings);
+        const data = docSnap.data();
+        setSettings({
+          ...defaultSettings,
+          ...data,
+          socialMedia: { ...defaultSettings.socialMedia, ...data.socialMedia },
+        } as SiteSettings);
       }
     } catch (error) {
       console.error("Error fetching settings:", error);
@@ -194,56 +205,72 @@ export default function SettingsPage() {
             Social Media
           </h2>
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-montserrat font-medium text-brown mb-1">
-                <Instagram className="w-4 h-4 inline mr-1" />
-                Instagram URL
-              </label>
-              <input
-                type="url"
-                value={settings.socialMedia.instagram}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    socialMedia: { ...settings.socialMedia, instagram: e.target.value },
-                  })
-                }
-                className="w-full px-3 py-2 border border-brown/20 rounded-lg focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-montserrat font-medium text-brown mb-1">
-                <Facebook className="w-4 h-4 inline mr-1" />
-                Facebook URL
-              </label>
-              <input
-                type="url"
-                value={settings.socialMedia.facebook}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    socialMedia: { ...settings.socialMedia, facebook: e.target.value },
-                  })
-                }
-                className="w-full px-3 py-2 border border-brown/20 rounded-lg focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-montserrat font-medium text-brown mb-1">
-                <Twitter className="w-4 h-4 inline mr-1" />
-                Twitter URL
-              </label>
-              <input
-                type="url"
-                value={settings.socialMedia.twitter}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    socialMedia: { ...settings.socialMedia, twitter: e.target.value },
-                  })
-                }
-                className="w-full px-3 py-2 border border-brown/20 rounded-lg focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none"
-              />
+            {[
+              { key: "instagram" as const, label: "Instagram URL", icon: Instagram, placeholder: "https://instagram.com/kdscomfortfood" },
+              { key: "facebook" as const, label: "Facebook URL", icon: Facebook, placeholder: "https://facebook.com/kdscomfortfood" },
+              { key: "twitter" as const, label: "Twitter / X URL", icon: Twitter, placeholder: "https://twitter.com/kdscomfortfood" },
+              { key: "tiktok" as const, label: "TikTok URL", icon: Globe, placeholder: "https://tiktok.com/@kdscomfortfood" },
+              { key: "yelp" as const, label: "Yelp Business URL", icon: Star, placeholder: "https://yelp.com/biz/kds-comfort-food-brooklyn" },
+              { key: "googleBusiness" as const, label: "Google Business URL", icon: ExternalLink, placeholder: "https://g.page/kdscomfortfood" },
+            ].map((field) => (
+              <div key={field.key}>
+                <label className="block text-sm font-montserrat font-medium text-brown mb-1">
+                  <field.icon className="w-4 h-4 inline mr-1" />
+                  {field.label}
+                </label>
+                <div className="relative">
+                  <input
+                    type="url"
+                    value={settings.socialMedia[field.key]}
+                    onChange={(e) =>
+                      setSettings({
+                        ...settings,
+                        socialMedia: { ...settings.socialMedia, [field.key]: e.target.value },
+                      })
+                    }
+                    placeholder={field.placeholder}
+                    className="w-full px-3 py-2 border border-brown/20 rounded-lg focus:border-orange focus:ring-2 focus:ring-orange/20 outline-none"
+                  />
+                  {settings.socialMedia[field.key] && (
+                    <Check className="w-4 h-4 text-green-500 absolute right-3 top-1/2 -translate-y-1/2" />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer Preview */}
+          <div className="mt-6">
+            <p className="text-sm font-montserrat font-medium text-brown mb-2">
+              Footer Preview
+            </p>
+            <div className="bg-brown rounded-lg p-4 flex items-center gap-3">
+              {[
+                { icon: Instagram, url: settings.socialMedia.instagram, label: "Instagram" },
+                { icon: Facebook, url: settings.socialMedia.facebook, label: "Facebook" },
+                { icon: Twitter, url: settings.socialMedia.twitter, label: "Twitter" },
+                { icon: Globe, url: settings.socialMedia.tiktok, label: "TikTok" },
+              ].map((link) => (
+                <div
+                  key={link.label}
+                  className={`p-2 rounded-full ${
+                    link.url
+                      ? "bg-white/10 text-white"
+                      : "bg-white/5 text-white/20"
+                  }`}
+                  title={link.url ? link.label : `${link.label} (not configured)`}
+                >
+                  <link.icon className="w-5 h-5" />
+                </div>
+              ))}
+              {!settings.socialMedia.instagram &&
+                !settings.socialMedia.facebook &&
+                !settings.socialMedia.twitter &&
+                !settings.socialMedia.tiktok && (
+                  <span className="text-white/40 text-sm font-montserrat">
+                    No social links configured
+                  </span>
+                )}
             </div>
           </div>
         </div>
@@ -278,9 +305,8 @@ export default function SettingsPage() {
       {/* Info Note */}
       <div className="bg-orange/10 border border-orange/20 rounded-xl p-4">
         <p className="text-sm text-brown/70 font-montserrat">
-          <strong>Note:</strong> Changes to these settings will be reflected on
-          your website after the next deployment. For immediate updates, contact
-          your developer.
+          <strong>Note:</strong> Changes to contact info and social links take
+          effect on your website immediately after saving.
         </p>
       </div>
     </div>

@@ -10,19 +10,21 @@ import {
   Image as ImageIcon,
   Star,
   DollarSign,
-  TrendingUp,
-  Users,
-  Calendar,
   ArrowRight,
+  AlertCircle,
+  BarChart3,
 } from "lucide-react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { getAggregatedReviews, type ReviewsResponse, SOURCE_INFO } from "@/lib/reviews";
 
 interface Stats {
   menuItems: number;
   galleryImages: number;
   testimonials: number;
+  pendingTestimonials: number;
   packages: number;
+  reviews: ReviewsResponse | null;
 }
 
 const quickActions = [
@@ -57,27 +59,36 @@ export default function AdminDashboard() {
     menuItems: 0,
     galleryImages: 0,
     testimonials: 0,
+    pendingTestimonials: 0,
     packages: 0,
+    reviews: null,
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        // Fetch counts from Firestore collections
-        const [menuSnap, gallerySnap, testimonialsSnap, packagesSnap] =
+        const [menuSnap, gallerySnap, testimonialsSnap, packagesSnap, reviewsData] =
           await Promise.all([
-            getDocs(collection(db, "menuItems")).catch(() => ({ size: 0 })),
-            getDocs(collection(db, "gallery")).catch(() => ({ size: 0 })),
-            getDocs(collection(db, "testimonials")).catch(() => ({ size: 0 })),
-            getDocs(collection(db, "packages")).catch(() => ({ size: 0 })),
+            getDocs(collection(db, "menuItems")).catch(() => ({ size: 0, docs: [] })),
+            getDocs(collection(db, "gallery")).catch(() => ({ size: 0, docs: [] })),
+            getDocs(collection(db, "testimonials")).catch(() => ({ size: 0, docs: [] })),
+            getDocs(collection(db, "packages")).catch(() => ({ size: 0, docs: [] })),
+            getAggregatedReviews().catch(() => null),
           ]);
+
+        const docs = "docs" in testimonialsSnap ? testimonialsSnap.docs : [];
+        const pendingCount = docs.filter(
+          (d) => d.data && d.data().approved === false
+        ).length;
 
         setStats({
           menuItems: menuSnap.size || 0,
           galleryImages: gallerySnap.size || 0,
           testimonials: testimonialsSnap.size || 0,
+          pendingTestimonials: pendingCount,
           packages: packagesSnap.size || 0,
+          reviews: reviewsData,
         });
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -156,6 +167,84 @@ export default function AdminDashboard() {
           </motion.div>
         ))}
       </div>
+
+      {/* Pending Testimonials Alert */}
+      {!loading && stats.pendingTestimonials > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <Link
+            href="/chefs-kitchen/testimonials"
+            className="flex items-center gap-3 bg-yellow-50 border border-yellow-200 rounded-xl p-4 hover:bg-yellow-100 transition-colors"
+          >
+            <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+            <span className="font-montserrat text-sm text-yellow-800">
+              <strong>{stats.pendingTestimonials}</strong> testimonial{stats.pendingTestimonials !== 1 ? "s" : ""} pending approval
+            </span>
+            <ArrowRight className="w-4 h-4 text-yellow-600 ml-auto" />
+          </Link>
+        </motion.div>
+      )}
+
+      {/* Reviews Overview */}
+      {!loading && stats.reviews && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-xl p-6 shadow-sm"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-playfair font-bold text-brown flex items-center gap-2">
+              <BarChart3 className="w-5 h-5 text-orange" />
+              Reviews Overview
+            </h2>
+            <Link
+              href="/chefs-kitchen/reviews"
+              className="text-sm text-orange hover:underline font-montserrat"
+            >
+              View all →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="text-center p-4 bg-cream rounded-lg">
+              <div className="flex items-center justify-center gap-1 mb-1">
+                <span className="text-2xl font-playfair font-bold text-brown">
+                  {stats.reviews.aggregatedRating}
+                </span>
+                <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+              </div>
+              <p className="text-sm text-brown/60 font-montserrat">Average Rating</p>
+            </div>
+            <div className="text-center p-4 bg-cream rounded-lg">
+              <p className="text-2xl font-playfair font-bold text-brown">
+                {stats.reviews.totalReviews}
+              </p>
+              <p className="text-sm text-brown/60 font-montserrat">Total Reviews</p>
+            </div>
+            <div className="p-4 bg-cream rounded-lg">
+              <p className="text-sm text-brown/60 font-montserrat mb-2">By Source</p>
+              <div className="flex flex-wrap gap-2">
+                {(["google", "yelp", "website"] as const).map((source) => {
+                  const count = stats.reviews!.reviews.filter(
+                    (r) => r.source === source
+                  ).length;
+                  if (count === 0) return null;
+                  return (
+                    <span
+                      key={source}
+                      className="text-xs font-montserrat px-2 py-1 rounded-full"
+                      style={{ backgroundColor: `${SOURCE_INFO[source].color}20`, color: SOURCE_INFO[source].color }}
+                    >
+                      {SOURCE_INFO[source].icon} {SOURCE_INFO[source].name}: {count}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Quick Actions */}
       <div>

@@ -9,6 +9,11 @@ export const SITE_CONFIG = {
   address: "Brooklyn, New York",
   socialMedia: {
     instagram: "https://instagram.com/kdscomfortfood",
+    facebook: "",
+    twitter: "",
+    tiktok: "",
+    yelp: "",
+    googleBusiness: "",
   },
 };
 

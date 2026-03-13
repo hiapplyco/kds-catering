@@ -164,6 +164,9 @@ export interface SiteSettings {
     instagram: string;
     facebook?: string;
     twitter?: string;
+    tiktok?: string;
+    yelp?: string;
+    googleBusiness?: string;
   };
 }
 
